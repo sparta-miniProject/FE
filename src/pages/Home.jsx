@@ -8,7 +8,7 @@ const Home = () => {
     <StDiv background>
       <StDiv>
         <StButton onClick={() => navigate("/main")}>
-          고주망태가 되어라 얍!
+          고주망태가 되어라 얍!???????????
         </StButton>
       </StDiv>
     </StDiv>
