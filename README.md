@@ -1,70 +1,33 @@
-# Getting Started with Create React App
+# Mini_Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+술이 술술
+[Notion : 프로젝트 정보](https://www.notion.so/SA-7-a638bed536bb4b7f9a92ad6b0fac8fa2)
 
-## Available Scripts
+## 📆개발기간
 
-In the project directory, you can run:
+2022년 12월 16일 ~ 2022년 12월 22일
 
-### `yarn start`
+## 👯팀원
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- [오연주BE](https://github.com/OhYeonJu)(팀장)
+- [유종열BE](https://github.com/jongyeol2)
+- [황수정BE](https://github.com/Hwangbambi)
+- [윤덕현BE](https://github.com/yundukhyun)
+- [최신영FE](https://github.com/front-chan)
+- [정상욱FE](https://github.com/JSU0318)
+- [양진규FE](https://github.com/jjolraman)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 와이어프레임
 
-### `yarn test`
+![술이술술](https://media.discordapp.net/attachments/1037267111585792020/1053338900812288010/83963AE8-9190-42BA-9656-592672551756.gif?width=856&height=504)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🛠️Tech Stacks
 
-### `yarn build`
+- JavaScript
+- React
+- Redux / Redux toolkit
+- Axios / Thunk
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 👀API
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[API설계](https://www.notion.so/SA-7-a638bed536bb4b7f9a92ad6b0fac8fa2#a68aa12d14e14e349be983b1c87ae9a8)
