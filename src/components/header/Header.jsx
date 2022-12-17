@@ -1,19 +1,27 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import Lottie from "lottie-react";
+// import { Link } from "react-router-dom";
+// import { useEffect } from "react";
+import { beer_image1 } from "../../assets";
+import "./header.css";
 
 const Header = () => {
   const navigate = useNavigate();
+
   return (
-    <StDiv>
-      <StSpan onClick={() => navigate("/")}>술이 술술</StSpan>
-      <StSpan onClick={() => navigate("/login")}>Login</StSpan>
-    </StDiv>
+    <div>
+      <StDiv>
+        <StSpan onClick={() => navigate("/")}>술이 술술</StSpan>
+        <Lottie className="beer_image1" animationData={beer_image1} />
+        <StSpan onClick={() => navigate("/login")}>Login</StSpan>
+      </StDiv>
+    </div>
   );
 };
 
 const StDiv = styled.div`
-  height: 60px;
+  height: 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
