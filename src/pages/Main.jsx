@@ -104,7 +104,7 @@ export default function Main() {
     );
     return () => clearInterval(setTime2);
   });
-
+  //ㅁㄴㅇㅁㄴㅇㅁㄴㅇ
   useEffect(() => {
     const setTime3 = setInterval(
       () =>
