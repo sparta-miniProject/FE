@@ -17,7 +17,7 @@ const FooterStyles = {
 const layoutStyles = {
   display: "flex",
   flexDirection: "column",
-  justifyContent: "flex-start",
+  justifyContent: "center",
   alignItems: "center",
   minHeight: "170vh",
 };
@@ -25,7 +25,7 @@ const layoutStyles = {
 const Footer = () => {
   return (
     <div style={{ ...FooterStyles }}>
-      <span>copyright ©️ 10기 C반 7조 | BE | FE |</span>
+      <span>copyright ©️ 10기 C반 7조 | BE || FE |</span>
     </div>
   );
 };

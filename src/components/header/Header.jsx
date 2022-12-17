@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Lottie from "lottie-react";
-// import { Link } from "react-router-dom";
-// import { useEffect } from "react";
+// // import { useEffect } from "react";
 import { beer_image1 } from "../../assets";
 import "./header.css";
 
