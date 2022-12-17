@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../header/Header";
+// import "./style.css";
 
 const FooterStyles = {
   width: "100%",
@@ -18,7 +19,7 @@ const layoutStyles = {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  minHeight: "82.5vh",
+  minHeight: "170vh",
 };
 
 const Footer = () => {

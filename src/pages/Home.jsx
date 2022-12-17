@@ -12,7 +12,7 @@ const Home = () => {
         <StButton onClick={() => navigate("/main")}>
           <StDiv txt>
             <FaGlassCheers />
-            고주망태가 되어라 얍!{" "}
+            고주망태가 되어라 얍!???????????{" "}
             <GiDrinking size="30" style={{ marginLeft: "10px" }}></GiDrinking>
           </StDiv>
         </StButton>
