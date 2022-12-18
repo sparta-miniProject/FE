@@ -1,6 +1,15 @@
 {
   "login": [],
   "signup": [],
-  "post": [],
+  "post": [
+    {
+      "title": "테서터???",
+      "imgurl": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400&q=60",
+      "post": "테서터 컴포넌트 테스트",
+      "id": 2100,
+      "category": "황금비율",
+      "count": 7
+    }
+  ],
   "like": []
 }
