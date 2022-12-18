@@ -1,6 +1,4 @@
-# Mini_Project
-
-술이 술술
+# 술이 술술🍻
 [Notion : 프로젝트 정보](https://www.notion.so/SA-7-a638bed536bb4b7f9a92ad6b0fac8fa2)
 
 ## 📆개발기간
