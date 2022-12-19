@@ -8,6 +8,7 @@ import Edit from "../pages/Edit";
 import AllList from "../pages/AllList";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
+import Detail from "../pages/Detail";
 
 const Router = () => {
   return (
@@ -26,7 +27,7 @@ const Router = () => {
           <Route path="post" element={<Post />} />
           <Route path="edit/:id" element={<Edit />} />
           {/* <Route path="lists" element={<AllList />} /> */}
-          {/* <Route path="lists/:id" element={<Detail />} /> */}
+          <Route path="lists/:id" element={<Detail />} />
         </Routes>
       </Layout>
     </BrowserRouter>
