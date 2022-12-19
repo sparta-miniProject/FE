@@ -48,6 +48,7 @@ const Edit = () => {
         // console.log(err);
       });
   };
+  // 왜 렌더링이 안되는가?
 
   return (
     <StDiv>
