@@ -12,20 +12,23 @@ const Edit = () => {
   const imgRef = useRef();
   const [post, setPosts] = useState([]);
 
-  const onChangeImage = () => {
-    const reader = new FileReader();
-    const file = imgRef.current.files[0];
-    console.log(file);
+  const onEditImage = (id, post) => {
+    apis.editPosts(id, post);
+    console.log(id);
+    console
+      .log(post)
+      .then((res) => {
+        //   window.location.href = "/lists";
+      })
 
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setImageUrl(reader.result);
-    };
+      .catch((err) => {
+        // console.log(err);
+      });
   };
 
   useEffect(() => {
     apis
-      .getIdPosts()
+      .getIdPost(param.id)
       .then((res) => {
         const get = res.data;
         setPosts(get);
@@ -35,9 +38,9 @@ const Edit = () => {
       });
   }, [param.id]);
 
-  const onEditPost = (id, recipe) => {
+  const onEditPost = (id, post) => {
     apis
-      .editPosts(id, recipe)
+      .editPost(id, post)
       .then((res) => {
         //   window.location.href = "/lists";
       })
@@ -45,6 +48,7 @@ const Edit = () => {
         // console.log(err);
       });
   };
+  // 왜 렌더링이 안되는가?
 
   return (
     <StDiv>
@@ -75,7 +79,7 @@ const Edit = () => {
           type="text"
           name="title"
           id="title"
-          maxLength={20}
+          maxLength={15}
           minLengt={3}
           defaultValue={post.title ? post.title : ""}
           onChange={(ev) => {
@@ -108,32 +112,33 @@ const Edit = () => {
         >
           <img
             alt="이미지 넣어주라능~"
-            src={imageUrl ? imageUrl : "/img/profile.png"}
+            src={imageUrl ? imageUrl : ""}
             width="500px"
             height="450px"
           ></img>
           <input
             type="file"
             ref={imgRef}
-            onChange={onChangeImage}
+            onChange={setImageUrl}
             width="500px"
           ></input>
         </StImage>
+
         <StLabel htmlFor="content">내용</StLabel>
         <StTextarea
           required
           maxLength={200}
           minLength={10}
           placeholder="레시피를 자세히 소개해주세요!"
+          defaultValue={post.content ? post.content : ""}
           name="content"
           id="content"
           cols="40"
           rows="10"
           onChange={(ev) => {
             const { value } = ev.target;
-            setEditPost({
-              ...post,
-              id: Math.floor(Math.random() * 10000),
+            onEditPost({
+              ...editPost,
               content: value,
             });
           }}
@@ -141,9 +146,12 @@ const Edit = () => {
         <div>
           <Button
             add
-            // onClick={() => {
-            //   navigate("/lists");
-            // }}
+            onClick={(e) => {
+              e.preventDefault();
+              // onSubmitHandler(editRecipe);
+              onEditImage(param.id, editPost);
+              navigate("/lists");
+            }}
           >
             수정하기
           </Button>
@@ -151,7 +159,7 @@ const Edit = () => {
           <Button
             back
             onClick={() => {
-              navigate("/main");
+              navigate("/lists");
             }}
           >
             Back
