@@ -22,20 +22,33 @@ const Post = () => {
     };
   };
 
+  // const [imageUrl, setImageUrl] = useState("디폴트 이미지 주소");
+  // const setFile = (e) => {};
+
   // const setFileImage = (e) => {
   //   if (e.target.files[0]) {
-  //     const imageUrl = new FormData();
-  //     imageUrl.append("file", e.target.files[0]);
+  //     const formdata = new FormData();
+  //     formdata.append("imageUrl", e.target.files[0]);
+  //     formdata.append("title", title);
+  //     formdata.append("content", content);
+  //     formdata.append("category", category);
   //     axios
-  //       .post("http://localhost:3005/post", imageUrl)
+  //       .post("http://localhost:3005/post", formdata)
   //       .then((res) => {
-  //         setImageUrl(res.data);
+  //         if (res.data.result === "SUCCESS") {
+  //           window.alert("오케이~");
+  //         }
   //       })
   //       .catch((err) => {
   //         console.error(err);
   //       });
   //   }
   // };
+
+  // {
+  //   title: "",
+  //   file: "",
+  // }
 
   const [post, setPost] = useState({
     title: "",

@@ -10,10 +10,10 @@ const instance = axios.create({
 export const apis = {
   getPosts: () => instance.get("/posts"),
   getReviews: (postId) => instance.get(`/reviews?postId=${postId}`),
-  getIdRecipes: (id) => instance.get(`/recipes/${id}`),
+  getIdPost: (id) => instance.get(`/recipes/${id}`),
   createPost: (post) => instance.post("/post", post),
   createReiews: (review) => instance.post("/reviews", review),
-  editRecipes: (id, recipe) => instance.patch(`/recipes/${id}`, recipe),
+  editPost: (id, post) => instance.patch(`/edit/:${id}`, post),
   deleteRecipes: (id) => instance.delete(`/recipes/${id}`),
   deleteReviews: (id) => instance.delete(`/reviews/${id}`),
 };
