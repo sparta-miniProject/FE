@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { apis } from "../lib/axios";
 import Button from "../components/button/Button";
+// import axios from "axios";
 
 const Post = () => {
   const navigate = useNavigate();
@@ -18,14 +19,29 @@ const Post = () => {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setImageUrl(reader.result);
-      console.log("이미지주소", reader.result);
     };
   };
+
+  // const setFileImage = (e) => {
+  //   if (e.target.files[0]) {
+  //     const imageUrl = new FormData();
+  //     imageUrl.append("file", e.target.files[0]);
+  //     axios
+  //       .post("http://localhost:3005/post", imageUrl)
+  //       .then((res) => {
+  //         setImageUrl(res.data);
+  //       })
+  //       .catch((err) => {
+  //         console.error(err);
+  //       });
+  //   }
+  // };
 
   const [post, setPost] = useState({
     title: "",
     imgurl: "",
-    post: "",
+    content: "",
+    category: "",
     count: 0,
   });
   const [posts, setPosts] = useState([]);
@@ -44,8 +60,11 @@ const Post = () => {
 
   const onSubmitHandler = (post) => {
     apis
-      .createPosts(post)
-      .then((res) => {})
+      .createPost(post)
+      .then((res) => {
+        console.log(res);
+      })
+
       .catch((err) => {
         // console.log(err);
       });
@@ -57,7 +76,7 @@ const Post = () => {
         onSubmit={(e) => {
           e.preventDefault();
           onSubmitHandler(post);
-          navigate("/Main");
+          navigate("/lists");
         }}
       >
         <StH1>당신의 레시피는?</StH1>
@@ -131,18 +150,19 @@ const Post = () => {
           <input
             type="file"
             ref={imgRef}
-            onChange={onChangeImage}
+            onChange={setImageUrl}
+            //onChange={setFileImage}
             width="500px"
           ></input>
         </StImage>
-        <StLabel htmlFor="post">내용</StLabel>
+        <StLabel htmlFor="content">내용</StLabel>
         <StTextarea
           required
           maxLength={200}
           minLength={10}
           placeholder="레시피를 자세히 소개해주세요!"
-          name="post"
-          id="post"
+          name="content"
+          id="content"
           cols="40"
           rows="10"
           onChange={(ev) => {
@@ -150,16 +170,16 @@ const Post = () => {
             setPost({
               ...post,
               id: Math.floor(Math.random() * 10000),
-              post: value,
+              content: value,
             });
           }}
         ></StTextarea>
         <div>
           <Button
-            back
-            onClick={() => {
-              navigate("/lists");
-            }}
+            add
+            // onClick={() => {
+            //   navigate("/lists");
+            // }}
           >
             등록
           </Button>

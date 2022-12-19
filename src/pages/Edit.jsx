@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { apis } from "../lib/axios";
 import Button from "../components/button/Button";
 
-const Post = () => {
+const Edit = () => {
+  const param = useParams();
   const navigate = useNavigate();
-
+  const [editPost, setEditPost] = useState({});
   const [imageUrl, setImageUrl] = useState(null);
   const imgRef = useRef();
+  const [post, setPosts] = useState([]);
 
   const onChangeImage = () => {
     const reader = new FileReader();
@@ -18,21 +20,12 @@ const Post = () => {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setImageUrl(reader.result);
-      console.log("이미지주소", reader.result);
     };
   };
 
-  const [post, setPost] = useState({
-    title: "",
-    imgurl: "",
-    post: "",
-    count: 0,
-  });
-  const [posts, setPosts] = useState([]);
-
   useEffect(() => {
     apis
-      .getPosts()
+      .getIdPosts()
       .then((res) => {
         const get = res.data;
         setPosts(get);
@@ -40,12 +33,14 @@ const Post = () => {
       .catch((err) => {
         // console.log(err);
       });
-  }, []);
+  }, [param.id]);
 
-  const onSubmitHandler = (post) => {
+  const onEditPost = (id, recipe) => {
     apis
-      .createPosts(post)
-      .then((res) => {})
+      .editPosts(id, recipe)
+      .then((res) => {
+        //   window.location.href = "/lists";
+      })
       .catch((err) => {
         // console.log(err);
       });
@@ -53,26 +48,19 @@ const Post = () => {
 
   return (
     <StDiv>
-      <StForm
-        onSubmit={(e) => {
-          e.preventDefault();
-          onSubmitHandler(post);
-          navigate("/Main");
-        }}
-      >
-        <StH1>당신의 레시피는?</StH1>
+      <StForm>
+        <StH1>당신의 레시피를 수정해보세요!</StH1>
         <StLabel htmlFor="category">카테고리</StLabel>
         <StSelect
           type="select"
           name="category"
           id="category"
           required
-          placeholder="카테고리를 선택해주세요."
           onChange={(ev) => {
             const { value } = ev.target;
-            setPost({
-              ...post,
-              id: Math.floor(Math.random() * 10000),
+            setEditPost({
+              ...editPost,
+              // id: Math.floor(Math.random() * 10000),
               category: value,
             });
           }}
@@ -89,17 +77,15 @@ const Post = () => {
           id="title"
           maxLength={20}
           minLengt={3}
-          placeholder="나만의 레시피 제목을 정해주세요"
-          required
+          defaultValue={post.title ? post.title : ""}
           onChange={(ev) => {
             const { value } = ev.target;
-            setPost({
-              ...post,
-              id: Math.floor(Math.random() * 10000),
+            setEditPost({
+              ...editPost,
               title: value,
             });
           }}
-        ></StInput>
+        />
         <StLabel htmlFor="imgurl">이미지</StLabel>
 
         {/* <React.Fragment>
@@ -108,16 +94,14 @@ const Post = () => {
     </React.Fragment>
   ); */}
         <StImage
-          required
-          placeholder=""
           type="file"
           name="imgurl"
           id="imgurl"
+          defaultValue={post.imgurl ? post.imgurl : ""}
           onChange={(ev) => {
             const { value } = ev.target;
-            setPost({
-              ...post,
-              id: Math.floor(Math.random() * 10000),
+            setEditPost({
+              ...editPost,
               imgurl: value,
             });
           }}
@@ -135,33 +119,33 @@ const Post = () => {
             width="500px"
           ></input>
         </StImage>
-        <StLabel htmlFor="post">내용</StLabel>
+        <StLabel htmlFor="content">내용</StLabel>
         <StTextarea
           required
           maxLength={200}
           minLength={10}
           placeholder="레시피를 자세히 소개해주세요!"
-          name="post"
-          id="post"
+          name="content"
+          id="content"
           cols="40"
           rows="10"
           onChange={(ev) => {
             const { value } = ev.target;
-            setPost({
+            setEditPost({
               ...post,
               id: Math.floor(Math.random() * 10000),
-              post: value,
+              content: value,
             });
           }}
         ></StTextarea>
         <div>
           <Button
-            back
-            onClick={() => {
-              navigate("/lists/");
-            }}
+            add
+            // onClick={() => {
+            //   navigate("/lists");
+            // }}
           >
-            수정
+            수정하기
           </Button>
           {/* <Link to={`/lists`}> */}
           <Button
@@ -277,4 +261,4 @@ const StImageSize = styled.image`
   width: 100px;
   height: 50px;
 `;
-export default Post;
+export default Edit;

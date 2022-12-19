@@ -1,17 +1,32 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import Slide from "react-slick";
 import { useNavigate } from "react-router-dom";
-import Lottie from "lottie-react";
-import { starlight } from "../assets";
+// import AllList from "./AllList";
+import axios from "axios";
+// import List from "../components/list/List";
+// import Lottie from "lottie-react";
+// import { starlight } from "../assets";
 
 // import img1 from "./img/1.png";
 // import img2 from "./img/2.png";
 // import img3 from "./img/3.png";
-const navigate = useNavigate;
+
 const TOTAL_SLIDES = 4; // 전체 슬라이드 개수(총3개. 배열로 계산)
 
 export default function Main() {
+  const navigate = useNavigate();
+  const [post, setPosts] = useState([]);
+
+  const fetchRecipes = async () => {
+    const { data } = await axios.get("http://localhost:3005/post");
+    console.log(data);
+    setPosts(data);
+  };
+
+  useEffect(() => {
+    fetchRecipes();
+  }, []);
+
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentSlide2, setCurrentSlide2] = useState(0);
   const [currentSlide3, setCurrentSlide3] = useState(0);
@@ -104,7 +119,7 @@ export default function Main() {
     );
     return () => clearInterval(setTime2);
   });
-  //ㅁㄴㅇㅁㄴㅇㅁㄴㅇ
+
   useEffect(() => {
     const setTime3 = setInterval(
       () =>
@@ -136,32 +151,34 @@ export default function Main() {
     slideRef3.current.style.transition = "all 0.5s ease-in-out";
     slideRef3.current.style.transform = `translateX(-${currentSlide3}00%)`; // 백틱을 사용하여 슬라이드로 이동하는 에니메이션을 만듭니다.
   }, [currentSlide3]);
+
   // <Lottie className="starlight" animationData={starlight} />;
   return (
     <div>
       <div>
         <Container>
           <Text>
-            <h1>소주</h1>
-            <p>{currentSlide + 1}위&nbsp;&nbsp;소주</p>
-            <AddWatch
-              onClick={() => {
-                navigate(`/`); // [id].배열 보내기
-              }}
-            >
-              더 보기
-            </AddWatch>
+            <h1>술</h1>
+            <p>{currentSlide + 1}위&nbsp;&nbsp;술</p>
+            <AddWatch onClick={() => navigate("/lists")}>더 보기</AddWatch>
           </Text>
+
           <SliderContainer id="testbutton" ref={slideRef}>
-            <StImg src="https://www.theguru.co.kr/data/photos/20200833/art_15973193952929_c65bed.jpg" />
-            <StImg src="https://www.theguru.co.kr/data/photos/20200833/art_15973193952929_c65bed.jpg" />
-            <StImg src="https://www.theguru.co.kr/data/photos/20200833/art_15973193952929_c65bed.jpg" />
-            <StImg src="https://www.theguru.co.kr/data/photos/20200833/art_15973193952929_c65bed.jpg" />
-            <StImg src="https://www.theguru.co.kr/data/photos/20200833/art_15973193952929_c65bed.jpg" />
+            {post.map((data) => {
+              if (data.category === "drink") {
+                console.log(data);
+                return (
+                  <div key={data.id}>
+                    <StImg src={data.imgurl} />
+                    <h4>{data.title}</h4>
+                  </div>
+                );
+              }
+            })}
           </SliderContainer>
           <Center>
-            <Button onClick={PrevSlide}>Prev</Button>
-            <Button onClick={NextSlide}>Next</Button>
+            <Button onClick={PrevSlide}>🔙</Button>
+            <Button onClick={NextSlide}>🔜</Button>
           </Center>
         </Container>
       </div>
@@ -172,22 +189,28 @@ export default function Main() {
             <p>{currentSlide2 + 1}위 황금비율</p>
             <AddWatch
               onClick={() => {
-                navigate(`/`); // [id].배열 보내기
+                navigate(`/lists`); // [id].배열 보내기
               }}
             >
               더 보기
             </AddWatch>
           </Text>
           <SliderContainer ref={slideRef2}>
-            <StImg src="https://www.theguru.co.kr/data/photos/20200833/art_15973193952929_c65bed.jpg" />
-            <StImg src="https://www.theguru.co.kr/data/photos/20200833/art_15973193952929_c65bed.jpg" />
-            <StImg src="https://www.theguru.co.kr/data/photos/20200833/art_15973193952929_c65bed.jpg" />
-            <StImg src="https://www.theguru.co.kr/data/photos/20200833/art_15973193952929_c65bed.jpg" />
-            <StImg src="https://www.theguru.co.kr/data/photos/20200833/art_15973193952929_c65bed.jpg" />
+            {post.map((data) => {
+              if (data.category === "recipe") {
+                console.log(data);
+                return (
+                  <div key={data.id}>
+                    <StImg src={data.imgurl} />
+                    <h4>{data.title}</h4>
+                  </div>
+                );
+              }
+            })}
           </SliderContainer>
           <Center>
-            <Button onClick={PrevSlide2}>Prev</Button>
-            <Button onClick={NextSlide2}>Next</Button>
+            <Button onClick={PrevSlide2}>🔙</Button>
+            <Button onClick={NextSlide2}>🔜</Button>
           </Center>
         </Container>
       </div>
@@ -198,22 +221,28 @@ export default function Main() {
             <p>{currentSlide3 + 1}위 &nbsp;안주</p>
             <AddWatch
               onClick={() => {
-                navigate(`/`); // [id].배열 보내기
+                navigate(`/lists`); // [id].배열 보내기
               }}
             >
               더 보기
             </AddWatch>
           </Text>
           <SliderContainer ref={slideRef3}>
-            <StImg src="https://www.theguru.co.kr/data/photos/20200833/art_15973193952929_c65bed.jpg" />
-            <StImg src="https://www.theguru.co.kr/data/photos/20200833/art_15973193952929_c65bed.jpg" />
-            <StImg src="https://www.theguru.co.kr/data/photos/20200833/art_15973193952929_c65bed.jpg" />
-            <StImg src="https://www.theguru.co.kr/data/photos/20200833/art_15973193952929_c65bed.jpg" />
-            <StImg src="https://www.theguru.co.kr/data/photos/20200833/art_15973193952929_c65bed.jpg" />
+            {post.map((data) => {
+              if (data.category === "food") {
+                console.log(data);
+                return (
+                  <div key={data.id}>
+                    <StImg src={data.imgurl} />
+                    <h4>{data.title}</h4>
+                  </div>
+                );
+              }
+            })}
           </SliderContainer>
           <Center>
-            <Button onClick={PrevSlide3}>Prev</Button>
-            <Button onClick={NextSlide3}>Next</Button>
+            <Button onClick={PrevSlide3}>🔙</Button>
+            <Button onClick={NextSlide3}>🔜</Button>
           </Center>
         </Container>
       </div>
@@ -222,12 +251,12 @@ export default function Main() {
 }
 
 const Container = styled.div`
-  opacity: 1;
-  width: 520px;
+  width: 400px;
   margin: auto;
-  height: 770px;
+  height: 780px;
   overflow: hidden; // 선을 넘어간 이미지들은 숨겨줍니다.
 `;
+
 const Button = styled.div`
   all: unset;
   padding: 1em 2em;
@@ -255,8 +284,8 @@ const AddWatch = styled.div`
   }
 `;
 const SliderContainer = styled.div`
-  margin: 0 auto;
-  margin-bottom: 2em;
+  /* margin: auto; */
+  margin-bottom: 1em;
   display: flex; // 이미지들을 가로로 나열합니다.
 `;
 const Text = styled.div`
@@ -277,11 +306,12 @@ const Center = styled.div`
   text-align: center;
 `;
 const StImg = styled.img`
-  width: 500px;
-  height: 500px;
+  width: 393.5px;
+  height: 400px;
   border-radius: 50px;
   border: 3px solid burlywood;
-  padding-left: 14.5px;
+  padding-left: 0.7px;
+  padding-top: 0.5px;
 `;
 // const StDetailbutton = styled.button`
 //   all: unset;
