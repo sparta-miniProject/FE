@@ -1,44 +1,104 @@
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
+import { __postSignup } from "../redux/modules/loginSlice";
+// import { __checkUserName, __postSignup } from "../redux/modules/loginSlice";
+import { useInput } from "../lib/utils/useInput";
 
 const SignUp = () => {
+  const [username, setUserName] = useInput();
+  const [password, setPassword] = useInput();
+  const [checkPassword, setCheckPassword] = useInput();
+
   const navigate = useNavigate();
+
+  const onSubmitSignup = (e) => {
+    e.preventDefault();
+    __postSignup({
+      username,
+      password,
+      checkPassword,
+    })
+      .then((res) => {
+        console.log("signup res: ", res);
+        localStorage.setItem("id", res.headers.authorization);
+        // navigate("/login");
+      })
+      .catch((err) => {
+        console.log("error: ", err);
+      });
+  };
+
+  // id 중복 체크 확인
+  /*
+  const onCheckUserName = () => {
+    __checkUserName(username).then((res) => {
+      console.log(res);
+    });
+  };
+  */
+
   return (
-    <StDiv logbox>
-      <div>
-        <StDiv inputbox>
-          <StLabel htmlFor="username">ID</StLabel>
-          <StInput type="text" id="username" name="username" />
-          <StLabel htmlFor="password">PW</StLabel>
-          <StInput type="password" id="password" name="username" />
-          <StLabel htmlFor="checkpassword">CHECK PW</StLabel>
-          <StInput type="password" id="checkpassword" />
-        </StDiv>
-        <StDiv btns>
+    <>
+      <StForm onSubmit={onSubmitSignup}>
+        <div>
+          <StDiv inputbox>
+            <StLabel htmlFor="username">ID</StLabel>
+            <StInput
+              type="text"
+              id="username"
+              value={username}
+              onChange={setUserName}
+            />
+            {/* <div>
+            <button
+              onClick={() => {
+                onCheckUserName(username);
+              }}
+              type="button"
+              style={{ textAlign: "right" }}
+            >
+              중복확인
+            </button>
+          </div> */}
+            <StLabel htmlFor="password">PW</StLabel>
+            <StInput
+              type="password"
+              id="password"
+              value={password}
+              onChange={setPassword}
+            />
+            <StLabel htmlFor="checkpassword">CHECK PW</StLabel>
+            <StInput
+              type="password"
+              id="checkpw"
+              value={checkPassword}
+              onChange={setCheckPassword}
+            />
+          </StDiv>
           <Stbutton log>가입하기</Stbutton>
-          <Stbutton reg onClick={() => navigate("/")}>
-            이전으로
-          </Stbutton>
-        </StDiv>
-      </div>
-    </StDiv>
+        </div>
+      </StForm>
+      <StDiv btns>
+        <Stbutton reg onClick={() => navigate("/login")}>
+          로그인
+        </Stbutton>
+      </StDiv>
+    </>
   );
 };
 
+const StForm = styled.form`
+  width: 300px;
+  height: 400px;
+  /* background-color: aqua; */
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: -150px;
+`;
 const StDiv = styled.div`
-  ${(props) =>
-    props.logbox &&
-    css`
-      width: 300px;
-      height: 400px;
-      /* background-color: aqua; */
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin-top: -150px;
-    `}
   ${(props) =>
     props.inputbox &&
     css`
@@ -46,7 +106,7 @@ const StDiv = styled.div`
       flex-direction: column;
       margin-bottom: 50px;
     `}
-    ${(props) =>
+  ${(props) =>
     props.btns &&
     css`
       display: flex;
