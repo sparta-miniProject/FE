@@ -1,53 +1,73 @@
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { __postLogin } from "../redux/modules/loginSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useInput } from "../lib/utils/useInput";
 
 const Login = () => {
+  const [username, setUserName] = useInput();
+  const [password, setPassword] = useInput();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const { isLoading, error, login } = useSelector((state) => state.login);
-  console.log("isLoading: ", isLoading);
-  console.log("error: ", error);
-  console.log("login: ", login);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    __postLogin({
+      username,
+      password,
+    })
+      .then((res) => {
+        console.log("res: ", res);
+        alert("로그인 성공");
+        localStorage.setItem("id", res.headers.authorization);
+
+        navigate("/");
+      })
+      .catch((error) => alert("error", error.response.data.msg));
+  };
 
   return (
-    <StDiv logbox>
-      <div>
-        <StDiv inputbox>
-          <StLabel htmlFor="username">ID</StLabel>
-          <StInput type="text" id="username" name="username" />
-          <StLabel htmlFor="password">PW</StLabel>
-          <StInput type="password" id="password" name="username" />
-        </StDiv>
-        {/* <label htmlFor="checkpassword">CHECK PW</label>
-      <input type="password" id="checkpassword" /> */}
-        <StDiv btns>
-          <Stbutton log>로그인</Stbutton>
-          <Stbutton reg onClick={() => navigate("/signup")}>
-            회원가입
-          </Stbutton>
-        </StDiv>
-      </div>
-    </StDiv>
+    <>
+      <StForm onSubmit={onSubmit}>
+        <div>
+          <StDiv inputbox>
+            <StLabel htmlFor="username">ID</StLabel>
+            <StInput
+              type="text"
+              id="username"
+              value={username}
+              onChange={setUserName}
+            />
+            <StLabel htmlFor="password">PW</StLabel>
+            <StInput
+              type="password"
+              id="password"
+              value={password}
+              onChange={setPassword}
+            />
+          </StDiv>
+          {/* <StDiv btns> */}
+        </div>
+        <Stbutton log>로그인</Stbutton>
+      </StForm>
+      <Stbutton reg onClick={() => navigate("/signup")}>
+        회원가입
+      </Stbutton>
+      {/* </StDiv> */}
+    </>
   );
 };
 
+const StForm = styled.form`
+  width: 300px;
+  height: 400px;
+  /* background-color: aqua; */
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: -150px;
+`;
 const StDiv = styled.div`
-  ${(props) =>
-    props.logbox &&
-    css`
-      width: 300px;
-      height: 400px;
-      /* background-color: aqua; */
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin-top: -150px;
-    `}
   ${(props) =>
     props.inputbox &&
     css`
@@ -55,7 +75,7 @@ const StDiv = styled.div`
       flex-direction: column;
       margin-bottom: 50px;
     `}
-    ${(props) =>
+  ${(props) =>
     props.btns &&
     css`
       display: flex;
