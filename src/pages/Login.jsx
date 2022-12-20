@@ -8,7 +8,7 @@ const Login = () => {
   const [password, setPassword] = useInput();
   const navigate = useNavigate();
 
-  const onSubmit = (e) => {
+  const onSubmitLogin = (e) => {
     e.preventDefault();
     __postLogin({
       username,
@@ -26,8 +26,9 @@ const Login = () => {
 
   return (
     <>
-      <StForm onSubmit={onSubmit}>
+      <StForm onSubmit={onSubmitLogin}>
         <div>
+          <h1>로그인</h1>
           <StDiv inputbox>
             <StLabel htmlFor="username">ID</StLabel>
             <StInput
@@ -60,12 +61,14 @@ const StForm = styled.form`
   width: 300px;
   height: 400px;
   /* background-color: aqua; */
-  padding: 10px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-top: -150px;
+  border: 3px solid burlywood;
+  border-radius: 10px;
 `;
 const StDiv = styled.div`
   ${(props) =>
@@ -96,6 +99,7 @@ const StInput = styled.input`
   border-bottom: 1px solid black;
   box-shadow: 1px 1px 4px 0px;
   margin: 15px;
+  padding-left: 10px;
 `;
 
 const Stbutton = styled.button`
@@ -104,13 +108,17 @@ const Stbutton = styled.button`
   ${(props) =>
     props.log &&
     css`
-      color: white;
-      background-color: black;
+      border: 1px solid burlywood;
+      font-weight: bold;
+      color: #0a0327;
+      background-color: burlywood;
     `}
   ${(props) =>
     props.reg &&
     css`
-      bordercolor: black;
+      border: 1px solid burlywood;
+      color: burlywood;
+      font-weight: bold;
       background-color: transparent;
     `}
 `;
