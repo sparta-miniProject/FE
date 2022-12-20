@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import Lottie from "lottie-react";
-// // import { useEffect } from "react";
 import { beer_image1 } from "../../assets";
 import "./header.css";
 import { useState } from "react";

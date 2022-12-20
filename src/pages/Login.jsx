@@ -8,6 +8,7 @@ const Login = () => {
   const [password, setPassword] = useInput();
   const navigate = useNavigate();
 
+  // 로그인 관련
   const onSubmitLogin = (e) => {
     e.preventDefault();
     __postLogin({

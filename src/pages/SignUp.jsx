@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
-// import { __postSignup } from "../redux/modules/loginSlice";
 import { __checkUserName, __postSignup } from "../redux/modules/loginSlice";
 import { useInput } from "../lib/utils/useInput";
+// import { __postSignup } from "../redux/modules/loginSlice";
 
 const SignUp = () => {
   const [username, setUserName] = useInput();
@@ -30,7 +30,6 @@ const SignUp = () => {
   };
 
   // id 중복 체크 확인
-
   const onCheckUserName = (username) => {
     __checkUserName(username).then((res) => {
       console.log(res);

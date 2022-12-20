@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// 기본 URL
 const instance = axios.create({
   baseURL: "http://13.125.150.83/api/",
   header: {
@@ -9,6 +10,7 @@ const instance = axios.create({
   },
 });
 
+// baseURL
 export const baseURL = axios.create({
   baseURL: "http://13.125.150.83/api/",
   headers: {
@@ -26,6 +28,7 @@ baseURL.interceptors.request.use((config) => {
   return config;
 });
 
+// apis
 export const apis = {
   // 로그인 관련
   postLogin: (login) => instance.post("/user/login", login),
