@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import List from "../components/list/List";
 import { __getPost } from "../redux/modules/postSlice";
 
@@ -13,7 +13,7 @@ const useTabs = (initialTabs, allTabs) => {
 };
 
 const AllList = () => {
-  const posts = useSelector((state) => state);
+  const posts = useSelector((state) => state.posts.posts.postList);
   const dispatch = useDispatch();
   console.log(posts);
 
@@ -26,39 +26,90 @@ const AllList = () => {
     {
       id: 1,
       category: "Drink",
-      content: "Drink",
+      content: posts?.map((post) =>
+        post.category === "drink" ? (
+          <List key={post.id} post={post}></List>
+        ) : null
+      ),
     },
     {
       id: 2,
       category: "Recipe",
-      content: "Recipe",
+      content: posts?.map((post) =>
+        post.category === "recipe" ? (
+          <List key={post.id} post={post}></List>
+        ) : null
+      ),
     },
     {
       id: 3,
       category: "Food",
-      content: "Food",
+      content: posts?.map((post) =>
+        post.category === "food" ? (
+          <List key={post.id} post={post}></List>
+        ) : null
+      ),
     },
   ];
 
   const { contentItem, contentChange } = useTabs(0, contents);
   return (
-    <div>
-      {contents.map((content, index) => (
-        <StButton key={content.id} onClick={() => contentChange(index)}>
-          {content.category}
-        </StButton>
-      ))}
-      <div>{contentItem.content}</div>
-      <List />
-    </div>
+    <StDiv box>
+      <StDiv btns>
+        {contents.map((content, index) => (
+          <StButton key={content.id} onClick={() => contentChange(index)}>
+            {content.category}
+          </StButton>
+        ))}
+      </StDiv>
+      <StDiv contents>{contentItem.content}</StDiv>
+      {/* {posts.map((post) =>
+        post.category === "drink" ? (
+          <List key={post.id} post={post}></List>
+        ) : null
+      )} */}
+    </StDiv>
   );
 };
+
+const StDiv = styled.div`
+  ${(props) =>
+    props.box &&
+    css`
+      width: 1340px;
+      margin-bottom: 20px;
+    `}
+  ${(props) =>
+    props.btns &&
+    css`
+      display: flex;
+      margin: 30px 0 10px 0px;
+    `}
+
+  ${(props) =>
+    props.contents &&
+    css`
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: flex-start;
+      margin-top: 35px;
+    `}
+`;
 
 const StButton = styled.button`
   width: 100px;
   height: 30px;
-  margin-right: 10px;
   border-radius: 20px;
+  background-color: transparent;
+  color: burlywood;
+  border: 1px solid burlywood;
+  cursor: pointer;
+  margin-right: 10px;
+  &:hover {
+    background-color: burlywood;
+    color: #0a0327;
+  }
 `;
 
 export default AllList;

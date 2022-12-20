@@ -7,63 +7,72 @@ import {
 } from "react-icons/ri";
 import { useState } from "react";
 
-const List = () => {
+const List = (props) => {
   const navigate = useNavigate();
   const [likeToggle, setLikeToggle] = useState(false);
 
+  const toggleButton = () => {
+    setLikeToggle((likeToggle) => !likeToggle);
+    console.log(likeToggle);
+  };
   return (
-    <div>
-      <StDiv card>
-        <StImg
-          src="https://cdn.discordapp.com/attachments/1037267111585792020/1053351646069014628/022z1mh9cxaop962q0zh.jpeg"
-          alt="img"
-        />
+    <StDiv card>
+      <StImg src={props.post.imageUrl} alt="img" />
+      <StDiv txt>
         <div>
           <StDiv h3>
-            <h3>하이볼 황금비율 공유!!</h3>
+            {/* <p>ID: {props.post.id}</p> */}
+            <h3>title: {props.post.title}</h3>
             <StDiv icon>
-              <RiHeartPulseFill />
-              <RiHeartPulseLine />
-              <p>하트수</p>
+              {likeToggle ? (
+                <RiHeartPulseLine
+                  onClick={toggleButton}
+                  style={{ cursor: "pointer" }}
+                />
+              ) : (
+                <RiHeartPulseFill
+                  onClick={toggleButton}
+                  style={{ cursor: "pointer" }}
+                />
+              )}
+              {/* <RiHeartPulseFill /> */}
+              {/* <RiHeartPulseLine
+                onClick={toggleButton}
+                style={{ cursor: "pointer" }}
+              ></RiHeartPulseLine> */}
+              <p>{props.post.like}</p>
             </StDiv>
           </StDiv>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita,
-            doloribus. Esse, facilis quos! Inventore, molestiae atque rerum
-            accusamus unde repellat ullam ut debitis voluptatum quas placeat?
-            Repellendus architecto excepturi illum.
-          </p>
-          <StDiv clicknum>
-            <StDiv clicked>
-              <RiUserHeartFill />
-              <SPar>조회수</SPar>
-            </StDiv>
-            <StButton onClick={() => navigate(`/lists/id`)}>
-              Detail Page
-            </StButton>
-          </StDiv>
+          <p>content: {props.post.content}</p>
         </div>
+        <StDiv clicknum>
+          <StDiv clicked>
+            <RiUserHeartFill />
+            <SPar>{props.post.views}</SPar>
+          </StDiv>
+          <StButton onClick={() => navigate(`/lists/id`)}>Detail Page</StButton>
+        </StDiv>
       </StDiv>
-    </div>
+    </StDiv>
   );
 };
 
 const StImg = styled.img`
-  width: 300px;
-  height: 200px;
+  width: 280px;
+  height: 180px;
 `;
 const StDiv = styled.div`
   ${(props) =>
     props.card &&
     css`
-      width: 300px;
-      height: 420px;
+      width: 280px;
+      height: 400px;
       padding: 20px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      box-shadow: 3px 3px 8px 0px #cccccc;
+      box-shadow: 0px 0px 1px 1px burlywood;
       border-radius: 5px;
     `}
   ${(props) =>
@@ -93,6 +102,15 @@ const StDiv = styled.div`
       justify-content: space-between;
       align-items: center;
     `}
+    ${(props) =>
+    props.txt &&
+    css`
+      width: 280px;
+      height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    `}
 `;
 
 const SPar = styled.p`
@@ -102,11 +120,15 @@ const SPar = styled.p`
 const StButton = styled.button`
   padding: 5px 20px;
   border-radius: 20px;
-  background-color: transparent;
+  background-color: burlywood;
+  color: #0a0327;
+  border: 0;
   transition: 0.2s ease-in-out;
   cursor: pointer;
   &:hover {
-    background-color: #cccccc;
+    background-color: #0a0327;
+    color: burlywood;
+    border: 1px solid burlywood;
   }
 `;
 
