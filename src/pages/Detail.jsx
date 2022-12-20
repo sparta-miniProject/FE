@@ -15,7 +15,7 @@ const Detail = () => {
         </div>
       </Stleft>
       <StDiv comments>
-        <span>asdfggg</span>
+        <span>asdf</span>
         <StButton onClick={() => navigate("/main")}>수정</StButton>
         <StButton onClick={() => navigate("/main")}>삭제</StButton>
       </StDiv>
