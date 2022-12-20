@@ -1,6 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useNavigate } from "react-router-dom";
+import "./main.css";
+import Lottie from "lottie-react";
+import { food } from "../assets";
+
 // import AllList from "./AllList";
 import axios from "axios";
 // import List from "../components/list/List";
@@ -16,7 +20,7 @@ const TOTAL_SLIDES = 4; // 전체 슬라이드 개수(총3개. 배열로 계산
 export default function Main() {
   const navigate = useNavigate();
   const [post, setPosts] = useState([]);
-
+  // const [isOpen, setIsOpen] = useState(false);
   const fetchRecipes = async () => {
     const { data } = await axios.get("http://localhost:3005/post");
     console.log(data);
@@ -170,7 +174,9 @@ export default function Main() {
                 return (
                   <div key={data.id}>
                     <StImg src={data.imgurl} />
-                    <h4>{data.title}</h4>
+                    <StH>
+                      <h2>{data.title}</h2>
+                    </StH>
                   </div>
                 );
               }
@@ -202,7 +208,9 @@ export default function Main() {
                 return (
                   <div key={data.id}>
                     <StImg src={data.imgurl} />
-                    <h4>{data.title}</h4>
+                    <StH>
+                      <h2>{data.title}</h2>
+                    </StH>
                   </div>
                 );
               }
@@ -234,7 +242,9 @@ export default function Main() {
                 return (
                   <div key={data.id}>
                     <StImg src={data.imgurl} />
-                    <h4>{data.title}</h4>
+                    <StH>
+                      <h2>{data.title}</h2>
+                    </StH>
                   </div>
                 );
               }
@@ -263,10 +273,11 @@ const Button = styled.div`
   margin: 2em 2em;
   color: burlywood;
   border-radius: 15px;
+  background-color: burlywood;
   border: 1px solid burlywood;
   cursor: pointer;
   &:hover {
-    background-color: burlywood;
+    background-color: #0a0327;
     color: #fff;
   }
 `;
@@ -313,6 +324,46 @@ const StImg = styled.img`
   padding-left: 0.7px;
   padding-top: 0.5px;
 `;
+const StH = styled.div`
+  padding-left: 10px;
+  text-align: center;
+  color: burlywood;
+  p {
+    color: #fff;
+    font-size: 20px;
+    background-color: burlywood;
+    display: inline-block;
+    border-radius: 50px;
+    padding: 0.8em 1em;
+  }
+`;
+
+// const SidebarBox = styled.div`
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   transform: translateY(-100%); // 사이드바 위로 올려둠
+//   width: 12.5rem;
+//   padding: 0.875rem;
+//   border-radius: 0.25rem;
+//   background: #fff;
+//   opacity: 0; // 투명도 조절하여 부드럽게 보이게하기
+//   transition: transform 500ms linear, opacity 500ms linear;
+//   pointer-events: none; // 사이드바 비활성화 일 때 클릭 안 됨
+
+//   & button {
+//     cursor: pointer;
+//   }
+
+//   ${(props) =>
+//     props.isOpen &&
+//     css`
+//       transform: translateY(0);
+//       opacity: 1;
+//       pointer-events: visible;
+//     `}
+// `;
+
 // const StDetailbutton = styled.button`
 //   all: unset;
 //   padding: 1em 2em;

@@ -6,8 +6,8 @@ const FooterStyles = {
   width: "100%",
   height: "100px",
   display: "flex",
-  background: "black",
-  color: "white",
+  background: "burlywood",
+  color: "#0a0327",
   alignItems: "center",
   justifyContent: "center",
   fontSize: "22px",
@@ -20,6 +20,7 @@ const layoutStyles = {
   justifyContent: "center",
   alignItems: "center",
   minHeight: "170vh",
+  backgroundColor: "#0a0327",
 };
 
 const Footer = () => {
