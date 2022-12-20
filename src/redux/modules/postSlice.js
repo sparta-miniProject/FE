@@ -23,6 +23,7 @@ export const __getPost = createAsyncThunk(
       return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
       console.log(err);
+
       return thunkAPI.rejectWithValue(err);
     }
   }
@@ -147,7 +148,7 @@ export const postSlice = createSlice({
       // 액션으로 받은 값 = payload 추가해준다.
       console.log("action: ", action.payload);
       state.isLoading = false;
-      state.posts = [...state.posts, action.payload];
+      state.posts.postList = [...state.posts.postList, action.payload];
     },
     [__addPost.rejected]: (state, action) => {
       state.isLoading = false;

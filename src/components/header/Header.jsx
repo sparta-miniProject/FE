@@ -1,21 +1,15 @@
 import { useNavigate } from "react-router-dom";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import Lottie from "lottie-react";
 import { beer_image1 } from "../../assets";
 import "./header.css";
-import { useState } from "react";
-// import { __postLogout } from "../../redux/modules/loginSlice";
 
 const Header = () => {
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className="nav">
       <StDiv>
-        <SidebarBox isOpen={isOpen}>
-          <button onClick={() => setIsOpen(false)}>X</button>
-          <p>이름: 내이름</p>
-        </SidebarBox>
         <StLogo>
           <img
             src="assets/img/soju.png"
@@ -74,29 +68,4 @@ const StLogo = styled.div`
   cursor: pointer;
 `;
 
-const SidebarBox = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translateY(-100%); // 사이드바 위로 올려둠
-  width: 12.5rem;
-  padding: 0.875rem;
-  border-radius: 0.25rem;
-  background: #fff;
-  opacity: 0; // 투명도 조절하여 부드럽게 보이게하기
-  transition: transform 500ms linear, opacity 500ms linear;
-  pointer-events: none; // 사이드바 비활성화 일 때 클릭 안 됨
-
-  & button {
-    cursor: pointer;
-  }
-
-  ${(props) =>
-    props.isOpen &&
-    css`
-      transform: translateY(0);
-      opacity: 1;
-      pointer-events: visible;
-    `}
-`;
 export default Header;

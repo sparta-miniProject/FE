@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { apis } from "../lib/axios";
 import Button from "../components/button/Button";
+import { useDispatch } from "react-redux";
+import { __addPost } from "../redux/modules/postSlice";
+
 // import axios from "axios";
 
 const Post = () => {
@@ -10,18 +13,29 @@ const Post = () => {
 
   const [imageUrl, setImageUrl] = useState(null);
   const imgRef = useRef();
+  // const [post, setPost] = useState();
+  const dispatch = useDispatch();
+  // const [title, setTitle] = useState("");
+  // const [content, setContent] = useState("");
+  // const [category, setCategory] = useState("");
 
-  const onChangeImage = () => {
+  const onChangeImage = (event) => {
+    const file = event.target.files[0];
     const reader = new FileReader();
-    const file = imgRef.current.files[0];
+    // const file = imgRef.current.files[0];
     console.log(file);
-
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setImageUrl(reader.result);
+      const image = reader.result;
+      setPost({
+        ...post,
+
+        imageUrl: image,
+      });
     };
   };
-
+  // console.log(imageUrl);
   // const [imageUrl, setImageUrl] = useState("디폴트 이미지 주소");
   // const setFile = (e) => {};
 
@@ -32,11 +46,12 @@ const Post = () => {
   //     formdata.append("title", title);
   //     formdata.append("content", content);
   //     formdata.append("category", category);
-  //     axios
-  //       .post("http://localhost:3005/post", formdata)
+
+  //     apis
+  //       .post("http://13.125.150.83/api/post", formdata)
   //       .then((res) => {
   //         if (res.data.result === "SUCCESS") {
-  //           window.alert("오케이~");
+  //           window.alert("SUCCESS");
   //         }
   //       })
   //       .catch((err) => {
@@ -52,35 +67,26 @@ const Post = () => {
 
   const [post, setPost] = useState({
     title: "",
-    imgurl: "",
+    imageUrl: "",
     content: "",
     category: "",
-    count: 0,
   });
-  const [posts, setPosts] = useState([]);
+  // const [posts, setPosts] = useState([]);
 
-  useEffect(() => {
-    apis
-      .getPosts()
-      .then((res) => {
-        const get = res.data;
-        setPosts(get);
-      })
-      .catch((err) => {
-        // console.log(err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   apis
+  //     .getPost()
+  //     .then((res) => {
+  //       const get = res.data;
+  //       setPost(get);
+  //     })
+  //     .catch((err) => {
+  //       // console.log(err);
+  //     });
+  // }, []);
 
   const onSubmitHandler = (post) => {
-    apis
-      .createPost(post)
-      .then((res) => {
-        console.log(res);
-      })
-
-      .catch((err) => {
-        // console.log(err);
-      });
+    dispatch(__addPost(post));
   };
 
   return (
@@ -104,7 +110,7 @@ const Post = () => {
             const { value } = ev.target;
             setPost({
               ...post,
-              id: Math.floor(Math.random() * 10000),
+
               category: value,
             });
           }}
@@ -127,7 +133,7 @@ const Post = () => {
             const { value } = ev.target;
             setPost({
               ...post,
-              id: Math.floor(Math.random() * 10000),
+
               title: value,
             });
           }}
@@ -143,27 +149,27 @@ const Post = () => {
           required
           placeholder=""
           type="file"
-          name="imgurl"
-          id="imgurl"
-          onChange={(ev) => {
-            const { value } = ev.target;
-            setPost({
-              ...post,
-              id: Math.floor(Math.random() * 10000),
-              imgurl: value,
-            });
-          }}
+          name="imageUrl"
+          id="imageUrl"
+          // onChange={(ev) => {
+          //   const {  } = ev.target;
+          //   setPost({
+          //     ...post,
+
+          //     imageUrl: {},
+          //   });
+          // }}
         >
           <img
-            alt="이미지 넣어주라능~"
-            src={imageUrl ? imageUrl : "/img/profile.png"}
+            alt=""
+            src={imageUrl ? imageUrl : ""}
             width="500px"
             height="450px"
           ></img>
           <input
             type="file"
             ref={imgRef}
-            onChange={setImageUrl}
+            onChange={onChangeImage}
             //onChange={setFileImage}
             width="500px"
           ></input>
@@ -182,7 +188,7 @@ const Post = () => {
             const { value } = ev.target;
             setPost({
               ...post,
-              id: Math.floor(Math.random() * 10000),
+
               content: value,
             });
           }}
@@ -217,7 +223,7 @@ const StDiv = styled.div`
   width: 95%;
   min-height: 150vh;
   /* filter: brightness(1); */
-  background-image: url("https://img.freepik.com/premium-vector/seamless-pattern-with-soju-bottles-bottles-with-korean-letters-meaning-burned-liquor_197792-1639.jpg?w=2000");
+  /* background-image: url("https://img.freepik.com/premium-vector/seamless-pattern-with-soju-bottles-bottles-with-korean-letters-meaning-burned-liquor_197792-1639.jpg?w=2000"); */
   /* background-image: linear-gradient(
       0deg,
       rgba(0, 0, 0, 0.096),
@@ -225,7 +231,7 @@ const StDiv = styled.div`
     ),
     url("https://media.discordapp.net/attachments/1037267111585792020/1052637612629823518/image0.jpg"); */
   background-size: cover;
-  opacity: 0.8;
+  opacity: 1;
 `;
 
 const StForm = styled.form`
@@ -243,14 +249,14 @@ const StForm = styled.form`
 
 const StH1 = styled.h1`
   padding-top: 100px;
-  color: black;
+  color: white;
   font-size: 50px;
   margin-bottom: 70px;
   /* background-color: #b0c4cc;
   border-radius: 20px; */
 `;
 const StLabel = styled.label`
-  color: black;
+  color: white;
   font-size: 20px;
   margin: 10px;
   font-weight: bold;
@@ -258,7 +264,7 @@ const StLabel = styled.label`
 
 const StInput = styled.input`
   font-weight: bold;
-  color: black;
+  color: white;
   text-align: center;
   width: 500px;
   height: 30px;
