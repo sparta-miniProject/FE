@@ -9,11 +9,13 @@ import AllList from "../pages/AllList";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import Detail from "../pages/Detail";
+import Sidebar from "../components/Sidebar/Sidebar";
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Layout>
+        <Sidebar />
         <Routes>
           <Route path="/" element={<Home />} />
 

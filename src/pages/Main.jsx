@@ -305,7 +305,8 @@ const Text = styled.div`
   text-align: center;
   color: burlywood;
   p {
-    color: #fff;
+    color: #0a0327;
+    font-weight: bold;
     font-size: 20px;
     background-color: burlywood;
     display: inline-block;
