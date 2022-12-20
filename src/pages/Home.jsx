@@ -10,11 +10,11 @@ const Home = () => {
     <StDiv bg>
       <StDiv>
         <StButton onClick={() => navigate("/main")}>
-          <StDiv txt>
+          <StSpan>
             <FaGlassCheers />
-            고주망태가 되어라 얍!???????????{" "}
+            고주망태가 되어라 얍!?
             <GiDrinking size="30" style={{ marginLeft: "10px" }}></GiDrinking>
-          </StDiv>
+          </StSpan>
         </StButton>
       </StDiv>
     </StDiv>
@@ -22,31 +22,41 @@ const Home = () => {
 };
 
 const StDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 82.5vh;
   ${(props) =>
     props.bg &&
     css`
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 82.5vh;
-    `}
-  ${(props) =>
-    props.txt &&
-    css`
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      width: 100%;
+      background-image: url("https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/11aj/image/cCmVyw4nKBbtw_hn8sv5NzcjMH8.JPG");
     `}
 `;
 
+const StSpan = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 const StButton = styled.button`
-  background-color: transparent;
-  box-shadow: 1px 1px 2px 0px;
-  padding: 10px 20px;
-  border-radius: 10px;
+  /* box-shadow: 1px 1px 2px 0px; */
   cursor: pointer;
   font-size: 20px;
+  padding: 10px 30px;
+  font-size: 20px;
+  border-radius: 20px;
+  background-color: burlywood;
+  border: 0;
+  color: black;
+  font-weight: bold;
+  transition: 0.5s ease-in-out;
+  &:hover {
+    background-color: #0a0327;
+    color: burlywood;
+    /* border: 1px solid burlywood; */
+  }
 `;
 
 export default Home;
