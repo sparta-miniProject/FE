@@ -11,10 +11,9 @@ export const __postLogin = async (post) => {
     // });
     console.log("post: ", post);
     console.log("data: ", data);
-    alert("로그인 성공");
     return data;
   } catch (error) {
-    alert("error", error.response.data.msg);
+    console.log(error.response.data.msg);
   }
 };
 
@@ -23,10 +22,19 @@ export const __postSignup = async (post) => {
     const data = await apis.postSignup(post);
     console.log("post: ", post);
     console.log("data: ", data);
-    alert("회원가입 성공");
+    // alert("회원가입 성공");
     return data;
   } catch (error) {
     alert("error", error.response.data.msg);
+  }
+};
+
+export const __postLogout = async () => {
+  try {
+    await apis.postLogout();
+    alert("로그아웃 성공");
+  } catch (error) {
+    alert("error", error.respose.data.msg);
   }
 };
 

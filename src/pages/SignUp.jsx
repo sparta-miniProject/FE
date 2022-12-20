@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { __postSignup } from "../redux/modules/loginSlice";
-// import { __checkUserName, __postSignup } from "../redux/modules/loginSlice";
+// import { __postSignup } from "../redux/modules/loginSlice";
+import { __checkUserName, __postSignup } from "../redux/modules/loginSlice";
 import { useInput } from "../lib/utils/useInput";
 
 const SignUp = () => {
@@ -20,8 +20,9 @@ const SignUp = () => {
     })
       .then((res) => {
         console.log("signup res: ", res);
-        localStorage.setItem("id", res.headers.authorization);
-        // navigate("/login");
+        alert(res.data.msg);
+        // localStorage.setItem("id", res.headers.authorization);
+        navigate("/login");
       })
       .catch((err) => {
         console.log("error: ", err);
@@ -29,28 +30,26 @@ const SignUp = () => {
   };
 
   // id 중복 체크 확인
-  /*
-  const onCheckUserName = () => {
+
+  const onCheckUserName = (username) => {
     __checkUserName(username).then((res) => {
       console.log(res);
     });
   };
-  */
 
   return (
-    <>
-      <StForm onSubmit={onSubmitSignup}>
-        <div>
-          <h1>회원가입</h1>
-          <StDiv inputbox>
-            <StLabel htmlFor="username">ID</StLabel>
-            <StInput
-              type="text"
-              id="username"
-              value={username}
-              onChange={setUserName}
-            />
-            {/* <div>
+    <StForm onSubmit={onSubmitSignup}>
+      <div>
+        <h1>회원가입</h1>
+        <StDiv inputbox>
+          <StLabel htmlFor="username">ID</StLabel>
+          <StInput
+            type="text"
+            id="username"
+            value={username}
+            onChange={setUserName}
+          />
+          <div>
             <button
               onClick={() => {
                 onCheckUserName(username);
@@ -60,31 +59,30 @@ const SignUp = () => {
             >
               중복확인
             </button>
-          </div> */}
-            <StLabel htmlFor="password">PW</StLabel>
-            <StInput
-              type="password"
-              id="password"
-              value={password}
-              onChange={setPassword}
-            />
-            <StLabel htmlFor="checkpassword">CHECK PW</StLabel>
-            <StInput
-              type="password"
-              id="checkpw"
-              value={checkPassword}
-              onChange={setCheckPassword}
-            />
-          </StDiv>
-        </div>
+          </div>
+          <StLabel htmlFor="password">PW</StLabel>
+          <StInput
+            type="password"
+            id="password"
+            value={password}
+            onChange={setPassword}
+          />
+          <StLabel htmlFor="checkpassword">CHECK PW</StLabel>
+          <StInput
+            type="password"
+            id="checkpw"
+            value={checkPassword}
+            onChange={setCheckPassword}
+          />
+        </StDiv>
+      </div>
+      <StDiv btns>
         <Stbutton log>가입하기</Stbutton>
-      </StForm>
-      {/* <StDiv btns> */}
-      <Stbutton reg onClick={() => navigate("/login")}>
-        로그인
-      </Stbutton>
-      {/* </StDiv> */}
-    </>
+        <Stbutton reg onClick={() => navigate("/login")}>
+          로그인
+        </Stbutton>
+      </StDiv>
+    </StForm>
   );
 };
 

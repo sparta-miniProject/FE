@@ -16,44 +16,44 @@ const Login = () => {
     })
       .then((res) => {
         console.log("res: ", res);
-        alert("로그인 성공");
+        if (res.data.statusCode === 200) {
+          alert("로그인 성공");
+        }
         localStorage.setItem("id", res.headers.authorization);
-
         navigate("/");
       })
-      .catch((error) => alert("error", error.response.data.msg));
+      .catch((error) => alert("ID 또는 비밀번호가 틀립니다!"));
+    // .catch((error) => alert(error.response.data.msg));
   };
 
   return (
-    <>
-      <StForm onSubmit={onSubmitLogin}>
-        <div>
-          <h1>로그인</h1>
-          <StDiv inputbox>
-            <StLabel htmlFor="username">ID</StLabel>
-            <StInput
-              type="text"
-              id="username"
-              value={username}
-              onChange={setUserName}
-            />
-            <StLabel htmlFor="password">PW</StLabel>
-            <StInput
-              type="password"
-              id="password"
-              value={password}
-              onChange={setPassword}
-            />
-          </StDiv>
-          {/* <StDiv btns> */}
-        </div>
+    <StForm onSubmit={onSubmitLogin}>
+      <div>
+        <h1>로그인</h1>
+        <StDiv inputbox>
+          <StLabel htmlFor="username">ID</StLabel>
+          <StInput
+            type="text"
+            id="username"
+            value={username}
+            onChange={setUserName}
+          />
+          <StLabel htmlFor="password">PW</StLabel>
+          <StInput
+            type="password"
+            id="password"
+            value={password}
+            onChange={setPassword}
+          />
+        </StDiv>
+      </div>
+      <StDiv btns>
         <Stbutton log>로그인</Stbutton>
-      </StForm>
-      <Stbutton reg onClick={() => navigate("/signup")}>
-        회원가입
-      </Stbutton>
-      {/* </StDiv> */}
-    </>
+        <Stbutton reg onClick={() => navigate("/signup")}>
+          회원가입
+        </Stbutton>
+      </StDiv>
+    </StForm>
   );
 };
 

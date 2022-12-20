@@ -3,8 +3,8 @@ import axios from "axios";
 const instance = axios.create({
   baseURL: "http://13.125.150.83/api/",
   header: {
-    // "content-type": "application/json;charset=UTF-8",
-    // accept: "application/json",
+    "content-type": "application/json;charset=UTF-8",
+    accept: "application/json",
     "Access-Control-Allow-Origin": "*",
   },
 });
@@ -12,8 +12,8 @@ const instance = axios.create({
 export const baseURL = axios.create({
   baseURL: "http://13.125.150.83/api/",
   headers: {
-    // "content-type": "application/json;charset=UTF-8",
-    // accept: "application/json",
+    "content-type": "application/json;charset=UTF-8",
+    accept: "application/json",
     "Access-Control-Allow-Origin": "*",
   },
 });
@@ -30,7 +30,8 @@ export const apis = {
   // 로그인 관련
   postLogin: (login) => instance.post("/user/login", login),
   postSignup: (signup) => instance.post("/user/signup", signup),
-  checkUserName: (username) => instance.get(`/user/idCheck/${username}`),
+  checkUserName: (username) => instance.get("/user/idCheck", username),
+  postLogout: () => instance.get("user/logout"),
 
   // 게시글 관련
   getPost: () => baseURL.get("/posts"),
