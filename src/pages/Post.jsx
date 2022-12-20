@@ -15,9 +15,6 @@ const Post = () => {
   const imgRef = useRef();
   // const [post, setPost] = useState();
   const dispatch = useDispatch();
-  // const [title, setTitle] = useState("");
-  // const [content, setContent] = useState("");
-  // const [category, setCategory] = useState("");
 
   const onChangeImage = (event) => {
     const file = event.target.files[0];
@@ -27,11 +24,11 @@ const Post = () => {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setImageUrl(reader.result);
-      const image = reader.result;
+      // const image = reader.result;
       setPost({
         ...post,
 
-        imageUrl: image,
+        imageUrl: reader.result,
       });
     };
   };
