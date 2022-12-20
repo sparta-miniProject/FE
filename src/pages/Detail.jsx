@@ -38,7 +38,7 @@ const StDiv = styled.div`
       height: 400px;
     `}
   ${(props) =>
-    props.allbox &&
+    ~props.allbox &&
     css`
       display: flex;
       gap: 20px;
