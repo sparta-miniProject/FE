@@ -5,9 +5,12 @@ import {
   RiHeartPulseFill,
   RiHeartPulseLine,
 } from "react-icons/ri";
+import { useState } from "react";
 
 const List = () => {
   const navigate = useNavigate();
+  const [likeToggle, setLikeToggle] = useState(false);
+
   return (
     <div>
       <StDiv card>
