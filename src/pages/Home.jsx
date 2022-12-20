@@ -27,12 +27,12 @@ const StDiv = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 82.5vh;
-  ${(props) =>
+  /* ${(props) =>
     props.bg &&
     css`
       width: 100%;
       background-image: url("https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/11aj/image/cCmVyw4nKBbtw_hn8sv5NzcjMH8.JPG");
-    `}
+    `} */
 `;
 
 const StSpan = styled.span`

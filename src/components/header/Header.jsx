@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Lottie from "lottie-react";
-// // import { useEffect } from "react";
 import { beer_image1 } from "../../assets";
 import "./header.css";
 
@@ -23,7 +22,23 @@ const Header = () => {
         </StLogo>
         {/* <StSpan onClick={() => navigate("/")}>술이 술술</StSpan> */}
         <Lottie className="beer_image1" animationData={beer_image1} />
-        <StSpan onClick={() => navigate("/login")}>Login</StSpan>
+        {/* <StSpan onClick={() => navigate("/login")}>Login</StSpan> */}
+
+        {/* 토큰이 있으면 로그아웃으로 버튼 변경(누르면 쿠키삭제) / 토큰 없으면 로그인 버튼 */}
+        {!localStorage.getItem("id") ? (
+          <StSpan onClick={() => navigate("/login")}>Login</StSpan>
+        ) : (
+          <StSpan
+            onClick={() => {
+              // __postLogout();
+              alert("로그아웃 되었습니다!");
+              localStorage.removeItem("id");
+              navigate("/login");
+            }}
+          >
+            Logout
+          </StSpan>
+        )}
       </StDiv>
     </div>
   );

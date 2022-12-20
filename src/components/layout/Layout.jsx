@@ -21,6 +21,7 @@ const layoutStyles = {
   alignItems: "center",
   minHeight: "170vh",
   backgroundColor: "#0a0327",
+  color: "burlywood",
 };
 
 const Footer = () => {
