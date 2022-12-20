@@ -15,7 +15,7 @@ const Detail = () => {
         </div>
       </Stleft>
       <StDiv comments>
-        <span>asdf</span>
+        <span>asdfggg</span>
         <StButton onClick={() => navigate("/main")}>수정</StButton>
         <StButton onClick={() => navigate("/main")}>삭제</StButton>
       </StDiv>
@@ -38,7 +38,7 @@ const StDiv = styled.div`
       height: 400px;
     `}
   ${(props) =>
-    props.allbox &&
+    ~props.allbox &&
     css`
       display: flex;
       gap: 20px;
