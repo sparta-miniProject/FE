@@ -105,9 +105,9 @@ export const __editPost = createAsyncThunk(
   "editPost",
   async (payload, thunkAPI) => {
     try {
-      const { id, recipe } = payload;
+      const { id, post } = payload;
       console.log("payload: ", payload);
-      const data = await apis.editPost(id, recipe);
+      const data = await apis.editPost(id, post);
       // const data = await axios.patch(
       //   `http://localhost:3002/recipes/${recipeId}`,
       //   recipe
