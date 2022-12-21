@@ -54,7 +54,7 @@ export const __getIdPost = createAsyncThunk(
       const data = await apis.getIdPost(payload);
       // const data = await axios.get(`http://localhost:3002/recipes/${payload}`);
       console.log("payload: ", payload);
-      console.log("data: ", data.data);
+      console.log("data: ", data);
       // const getId = data.data.filter((recipe) => recipe.id === payload)[0];
       return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
