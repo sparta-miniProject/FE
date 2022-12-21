@@ -61,14 +61,13 @@ const Login = () => {
 const StForm = styled.form`
   width: 300px;
   height: 400px;
-  /* background-color: aqua; */
   padding: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-top: -150px;
-  border: 3px solid burlywood;
+  /* border: 3px solid burlywood; */
   border-radius: 10px;
 `;
 const StDiv = styled.div`
@@ -85,7 +84,6 @@ const StDiv = styled.div`
       display: flex;
       justify-content: center;
       gap: 10px;
-      margin-top: 70px;
     `}
 `;
 
@@ -97,14 +95,19 @@ const StInput = styled.input`
   width: 250px;
   height: 35px;
   border: 0;
-  border-bottom: 1px solid black;
-  box-shadow: 1px 1px 4px 0px;
+  border-bottom: 1px solid burlywood;
+  background-color: transparent;
+  color: burlywood;
   margin: 15px;
   padding-left: 10px;
+  &:focus {
+    outline: none;
+  }
 `;
 
 const Stbutton = styled.button`
-  padding: 10px 40px;
+  width: 150px;
+  height: 40px;
   cursor: pointer;
   ${(props) =>
     props.log &&
