@@ -21,7 +21,7 @@ const Login = () => {
           alert("로그인 성공");
         }
         localStorage.setItem("id", res.headers.authorization);
-        navigate("/");
+        navigate("/main");
       })
       .catch((error) => alert("ID 또는 비밀번호가 틀립니다!"));
     // .catch((error) => alert(error.response.data.msg));
