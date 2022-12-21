@@ -313,4 +313,5 @@ const StImageSize = styled.image`
   width: 100px;
   height: 50px;
 `;
+
 export default Post;
