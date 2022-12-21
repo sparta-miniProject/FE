@@ -10,6 +10,7 @@ const initialState = {
   like: [],
   isLoading: true,
   error: null,
+  post: {},
 };
 
 // 데이터 불러오기
@@ -54,9 +55,9 @@ export const __getIdPost = createAsyncThunk(
       const data = await apis.getIdPost(payload);
       // const data = await axios.get(`http://localhost:3002/recipes/${payload}`);
       console.log("payload: ", payload);
-      console.log("data: ", data.data);
+      console.log("data: ", data);
       // const getId = data.data.filter((recipe) => recipe.id === payload)[0];
-      return thunkAPI.fulfillWithValue(data.data);
+      return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       console.log(err);
       return thunkAPI.rejectWithValue(err);
@@ -105,9 +106,9 @@ export const __editPost = createAsyncThunk(
   "editPost",
   async (payload, thunkAPI) => {
     try {
-      const { id, recipe } = payload;
+      const { id, post } = payload;
       console.log("payload: ", payload);
-      const data = await apis.editPost(id, recipe);
+      const data = await apis.editPost(id, post);
       // const data = await axios.patch(
       //   `http://localhost:3002/recipes/${recipeId}`,
       //   recipe
@@ -168,7 +169,7 @@ export const postSlice = createSlice({
     },
     [__getIdPost.fulfilled]: (state, action) => {
       state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
-      state.posts = action.payload; // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
+      state.post = action.payload.data; // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
       // console.log("action.payload: ", action.payload);
       // console.log("state.posts: ", state.posts);
     },
