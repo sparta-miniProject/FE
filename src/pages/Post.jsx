@@ -97,6 +97,7 @@ const Post = () => {
       >
         <StH1>당신의 레시피는?</StH1>
         <StLabel htmlFor="category">카테고리</StLabel>
+        <br></br>
         <StSelect
           type="select"
           name="category"
@@ -117,7 +118,9 @@ const Post = () => {
           <option value="recipe">🥇 황 금 비 율 🥇</option>
           <option value="food">🍲 안 주 🍲</option>
         </StSelect>
+        <br></br>
         <StLabel htmlFor="title">제목</StLabel>
+        <br></br>
         <StInput
           type="text"
           name="title"
@@ -135,8 +138,9 @@ const Post = () => {
             });
           }}
         ></StInput>
+        <br></br>
         <StLabel htmlFor="imgurl">이미지</StLabel>
-
+        <br></br>
         {/* <React.Fragment>
       <img src={"/img/profile.png"}></img>
       <input type="file" ref={imgRef} onChange={onChangeImage}></input>
@@ -171,7 +175,9 @@ const Post = () => {
             width="500px"
           ></input>
         </StImage>
+        <br></br>
         <StLabel htmlFor="content">내용</StLabel>
+        <br></br>
         <StTextarea
           required
           maxLength={200}
@@ -190,6 +196,7 @@ const Post = () => {
             });
           }}
         ></StTextarea>
+        <br></br>
         <div>
           <Button
             add
@@ -210,6 +217,8 @@ const Post = () => {
           </Button>
           {/* </Link> */}
         </div>
+        <br></br>
+        <br></br>
       </StForm>
     </StDiv>
   );
@@ -232,8 +241,9 @@ const StDiv = styled.div`
 `;
 
 const StForm = styled.form`
-  /* background-color: aqua; */
-  max-width: 1000px;
+  border-radius: 5px;
+  max-width: 700px;
+  border: 1px solid burlywood;
   width: 95%;
   display: flex;
   flex-direction: column;
@@ -246,14 +256,14 @@ const StForm = styled.form`
 
 const StH1 = styled.h1`
   padding-top: 100px;
-  color: white;
+  color: burlywood;
   font-size: 50px;
   margin-bottom: 70px;
   /* background-color: #b0c4cc;
   border-radius: 20px; */
 `;
 const StLabel = styled.label`
-  color: white;
+  color: burlywood;
   font-size: 20px;
   margin: 10px;
   font-weight: bold;
@@ -261,15 +271,15 @@ const StLabel = styled.label`
 
 const StInput = styled.input`
   font-weight: bold;
-  color: white;
+  color: burlywood;
   text-align: center;
   width: 500px;
   height: 30px;
-  border-radius: 10px;
+
   border: 0;
-  border-bottom: 3px solid #4ea1ba;
+  border-bottom: 1px solid burlywood;
   background-color: transparent;
-  background-color: #d6edf8;
+  background-color: #0a0327;
   font-size: 20px;
   padding: 10px;
 
@@ -280,38 +290,57 @@ const StInput = styled.input`
 
 const StTextarea = styled.textarea`
   width: 500px;
-  border-radius: 10px;
   border: 0;
-  border-bottom: 3px solid #4ea1ba;
-  background-color: #d6edf8;
+  border-bottom: 1px solid burlywood;
+  background-color: #0a0327;
   font-size: 20px;
+  font-weight: bold;
   padding: 10px;
   opacity: 0.9;
+  color: burlywood;
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
   &:focus {
     outline: none;
   }
 `;
+
 const StSelect = styled.select`
+  background-color: #0a0327;
   text-align: center;
   font-size: 20px;
+  color: burlywood;
   width: 300px;
   padding: 5px;
-  border: 1px solid #999;
+  border: 1px solid burlywood;
   font-family: "Nanumgothic";
-  border-radius: 3px;
+  border-radius: 5px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: burlywood;
+    color: #0a0327;
+  }
 `;
 
 const StImage = styled.div`
   align-items: center;
   width: 500px;
+  height: 490px;
+  border: none;
+  background: transparent;
+  border: 1px solid burlywood;
+  border-radius: 5px;
 `;
-const StImageSize = styled.image`
-  width: 100px;
-  height: 50px;
-`;
+// const StImageSize = styled.image`
+//   width: 100px;
+//   height: 50px;
+// `;
 
 export default Post;

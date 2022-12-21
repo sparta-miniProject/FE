@@ -38,10 +38,19 @@ export const apis = {
 
   // 게시글 관련
   getPost: () => baseURL.get("/posts"),
-  getIdPost: (id) => baseURL.get(`/post/${id}`),
+  getIdPost: (id) => {
+    console.log("getpost", id);
+    baseURL.get(`/post/${id}`);
+  },
   createPost: (post) => baseURL.post("/post", post),
   deletePost: (id) => baseURL.delete(`/post/${id}`),
-  editPost: (id, post) => baseURL.patch(`/post/${id}`, post),
+  editPost: (id, post) => {
+    console.log("string", id, post);
+    baseURL.patch(`/post/${id}`, post);
+  },
+  topPost: () => baseURL.get("/tops"),
+
+  // category,title,imageUrl,post.like
 
   // 리뷰 관련
   getComment: (postId) => baseURL.get(`/post/${postId}`),

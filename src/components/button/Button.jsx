@@ -57,33 +57,41 @@ const StButton = styled.button`
   ${(props) =>
     props.add &&
     css`
-      background-color: #4ea1ba;
+      background-color: burlywood;
+      color: #0a0327;
       width: 180px;
       height: 40px;
-      border-radius: 10px;
-      border: 0;
+      border-radius: 5px;
       font-size: 20px;
       margin: 20px;
       margin-top: 30px;
+      border: 1px solid burlywood;
+      cursor: pointer;
       transition: background-color 0.2s;
+
       &:hover {
-        background-color: #89c9dd;
+        background-color: #0a0327;
+        color: burlywood;
       }
     `}
   ${(props) =>
     props.back &&
     css`
+      background-color: transparent;
+      color: burlywood;
       width: 180px;
-      height: 40px;
-      border-radius: 10px;
-      border: 0;
+      height: 41px;
+      border-radius: 5px;
       font-size: 20px;
       margin: 20px;
       margin-top: 30px;
-      background-color: #b9c6cb;
+      border: 1px solid burlywood;
       transition: background-color 0.2s;
+      cursor: pointer;
+
       &:hover {
-        background-color: #d9e1e4;
+        background-color: burlywood;
+        color: #0a0327;
       }
     `}
   ${(props) =>
@@ -284,8 +292,6 @@ const StButton = styled.button`
         animation-delay: 0.25s;
       }
 
-      
-
       .login-box a span:nth-child(3) {
         bottom: 0;
         right: -100%;
@@ -296,8 +302,6 @@ const StButton = styled.button`
         animation-delay: 0.5s;
       }
 
-      
-
       .login-box a span:nth-child(4) {
         bottom: -100%;
         left: 0;
@@ -307,8 +311,6 @@ const StButton = styled.button`
         animation: btn-anim4 1s linear infinite;
         animation-delay: 0.75s;
       }
-
-      
     `}
 `;
 
