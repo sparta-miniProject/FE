@@ -48,17 +48,18 @@ const SignUp = () => {
             value={username}
             onChange={setUserName}
           />
-          <div>
-            <button
+          <StDiv checkid>
+            <StButton
+              checkbtn
               onClick={() => {
                 onCheckUserName(username);
               }}
               type="button"
-              style={{ textAlign: "right" }}
             >
               중복확인
-            </button>
-          </div>
+            </StButton>
+            <StP>ID 중복체크를 해주세요</StP>
+          </StDiv>
           <StLabel htmlFor="password">PW</StLabel>
           <StInput
             type="password"
@@ -76,10 +77,10 @@ const SignUp = () => {
         </StDiv>
       </div>
       <StDiv btns>
-        <Stbutton log>가입하기</Stbutton>
-        <Stbutton reg onClick={() => navigate("/login")}>
+        <StButton log>가입하기</StButton>
+        <StButton reg onClick={() => navigate("/login")}>
           로그인
-        </Stbutton>
+        </StButton>
       </StDiv>
     </StForm>
   );
@@ -87,15 +88,14 @@ const SignUp = () => {
 
 const StForm = styled.form`
   width: 300px;
-  height: 400px;
-  /* background-color: aqua; */
+  height: 450px;
   padding: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-top: -150px;
-  border: 3px solid burlywood;
+  /* border: 3px solid burlywood; */
   border-radius: 10px;
 `;
 const StDiv = styled.div`
@@ -112,8 +112,17 @@ const StDiv = styled.div`
       display: flex;
       justify-content: center;
       gap: 10px;
-      margin-top: 70px;
     `}
+    ${(props) =>
+    props.checkid &&
+    css`
+      display: flex;
+      margin-bottom: 10px;
+    `}
+`;
+
+const StP = styled.p`
+  margin: 0;
 `;
 
 const StLabel = styled.label`
@@ -124,19 +133,23 @@ const StInput = styled.input`
   width: 250px;
   height: 35px;
   border: 0;
-  border-bottom: 1px solid black;
-  box-shadow: 1px 1px 4px 0px;
+  border-bottom: 1px solid burlywood;
+  background-color: transparent;
+  color: burlywood;
   margin: 15px;
   padding-left: 10px;
+  &:focus {
+    outline: none;
+  }
 `;
 
-const Stbutton = styled.button`
-  width: 200px;
-  height: 50px;
+const StButton = styled.button`
   cursor: pointer;
   ${(props) =>
     props.log &&
     css`
+      width: 150px;
+      height: 40px;
       border: 1px solid burlywood;
       font-weight: bold;
       color: #0a0327;
@@ -145,10 +158,23 @@ const Stbutton = styled.button`
   ${(props) =>
     props.reg &&
     css`
+      width: 150px;
+      height: 40px;
       border: 1px solid burlywood;
       color: burlywood;
       font-weight: bold;
       background-color: transparent;
+    `}
+    ${(props) =>
+    props.checkbtn &&
+    css`
+      width: 70px;
+      height: 20px;
+      margin-right: 10px;
+      text-align: center;
+      color: #0a0327;
+      background-color: burlywood;
+      border: 0;
     `}
 `;
 

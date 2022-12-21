@@ -1,109 +1,183 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { __getIdPost } from "../redux/modules/postSlice";
+import {
+  RiUserHeartFill,
+  RiHeartPulseFill,
+  RiHeartPulseLine,
+} from "react-icons/ri";
 
 const Detail = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const param = useParams();
   const [contents, setContents] = useState("");
   const [title, setTitle] = useState("");
 
-  useEffect(() => {
-    // dispatch(__getDiary());
-  }, []);
+  const [likeToggle, setLikeToggle] = useState(false);
 
-  // 인풋 입력하고 추가버튼을 눌렀을 때 일어나는 일
-
-  const onAddHandler = (e) => {
-    // event.preventDefault();
-
-    // 새로운 데이터가 추가되면 list를 만들고
-    const newComment = {
-      id: Math.floor(Math.random() * 100),
-      title: title,
-      contents: contents,
-      is_edit: false,
-      memo: [],
-    };
-    // dispatch(변화)를 발생시켜서 액션을 리듀서에 보낸다.
-    // redux에서 __addDiary(액션)가 어떤 일을 하는지 명시해줘야함
-    // dispatch(__addDiary(newComment));
-
-    // input내용들 초기화 ("")빈값을 넣어줘
-
-    setTitle("");
-
-    setContents("");
+  const toggleButton = () => {
+    setLikeToggle((likeToggle) => !likeToggle);
+    console.log(likeToggle);
   };
 
+  const posts = useSelector((state) => state.posts.posts);
+  console.log("posts???", posts);
+
+  useEffect(() => {
+    dispatch(__getIdPost(+param.id));
+  }, [dispatch, param.id]);
+
   return (
-    <StDiv allbox>
-      <Stleft>
-        <h1>하이볼 레시피 공유!!</h1>
-        <input type="box"></input>
-        <div>
-          <StButton onClick={() => navigate("/main")}>수정하기</StButton>
-          <StButton onClick={() => navigate("/main")}>삭제하기</StButton>
-        </div>
-      </Stleft>
-      <StDiv comments>
+    <StDiv detailbox>
+      <StSection detailcard>
+        <StImg src={posts.imageUrl} alt="이미지" />
+        <StDiv textcard>
+          <StDiv tcard_1>
+            <StDiv titlike>
+              <h1>{posts.title}</h1>
+              <StDiv liketoggle>
+                {likeToggle ? (
+                  <RiHeartPulseLine
+                    onClick={toggleButton}
+                    style={{ cursor: "pointer" }}
+                  />
+                ) : (
+                  <RiHeartPulseFill
+                    onClick={toggleButton}
+                    style={{ cursor: "pointer" }}
+                  />
+                )}
+                {/* <RiHeartPulseFill /> */}
+                {/* <RiHeartPulseLine
+                onClick={toggleButton}
+                style={{ cursor: "pointer" }}
+              ></RiHeartPulseLine> */}
+                <StP>{posts.like}</StP>
+              </StDiv>
+            </StDiv>
+            <p>{posts.content}</p>
+          </StDiv>
+          <StDiv tcard_2>
+            <StDiv countuser>
+              <StDiv liketoggle>
+                <RiUserHeartFill />
+                <p>{posts.views}</p>
+              </StDiv>
+              <p>{posts.username}</p>
+            </StDiv>
+            <StDiv cardbtns>
+              <StButton txtmodi onClick={() => navigate(`/edit/${param.id}`)}>
+                수정하기
+              </StButton>
+              <StButton txtdel onClick={() => navigate("/lists")}>
+                삭제하기
+              </StButton>
+            </StDiv>
+          </StDiv>
+        </StDiv>
+      </StSection>
+      <StSection commentcard>
         <div>
           <h1>Comments</h1>
-          <StButton onClick={() => navigate("/main")}>이전으로</StButton>
+          <button onClick={() => navigate("/lists")}>이전으로</button>
         </div>
-        <br />
-        <span>제목</span>
-        <input type="box"></input>
-        <StButton onClick={() => navigate("/main")}>수정</StButton>
-        <StButton onClick={() => navigate("/main")}>삭제</StButton>
-      </StDiv>
+        <div>
+          <input type="text"></input>
+          <button>추가</button>
+        </div>
+        <div>
+          <button>삭제</button>
+        </div>
+      </StSection>
     </StDiv>
   );
 };
 
 const StDiv = styled.div`
   ${(props) =>
-    props.comments &&
-    css`
-      float: right;
-      display: flex;
-      /* flex-direction: right; */
-      justify-content: flex-start;
-      align-items: center;
-      border: solid;
-      /* min-height: 82.5vh; */
-      width: 500px;
-      height: 400px;
-    `}
-  ${(props) =>
-    ~props.allbox &&
+    props.detailbox &&
     css`
       display: flex;
       gap: 20px;
-      justify-content: center;
+    `}
+  ${(props) =>
+    props.liketoggle &&
+    css`
+      display: flex;
       align-items: center;
+    `}
+    ${(props) =>
+    props.textcard &&
+    css`
+      width: 300px;
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    `}
+    ${(props) =>
+    props.titlike &&
+    css`
+      display: flex;
+      justify-content: space-between;
+    `}
+    ${(props) =>
+    props.countuser &&
+    css`
+      display: flex;
+      justify-content: space-between;
+    `}
+    ${(props) =>
+    props.cardbtns &&
+    css`
+      display: flex;
+      gap: 10px;
     `}
 `;
 
-const Stleft = styled.div`
-  float: left;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  /* min-height: 82.5vh; */
-  border: solid;
-  width: 300px;
-  height: 400px;
+const StSection = styled.section`
+  ${(props) =>
+    props.detailcard &&
+    css`
+      width: 300px;
+      height: 500px;
+      border: 1px solid burlywood;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-radius: 5px;
+    `}
+  ${(props) =>
+    props.commentcard &&
+    css`
+      width: 500px;
+      height: 500px;
+      border: 1px solid burlywood;
+      padding: 20px;
+    `}
 `;
 
 const StButton = styled.button`
+  width: 100px;
+  height: 30px;
+  border: 1px solid burlywood;
+  border-radius: 5px;
   background-color: transparent;
-  box-shadow: 1px 1px 2px 0px;
-  padding: 10px 20px;
-  border-radius: 10px;
-  margin-left: 10px;
-  cursor: pointer;
+  color: burlywood;
+  ${(props) => props.txtmodi && css``}
+`;
+
+const StImg = styled.img`
+  width: 300px;
+  height: 200px;
+`;
+
+const StP = styled.p`
+  margin: 0;
 `;
 
 export default Detail;

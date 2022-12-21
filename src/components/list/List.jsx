@@ -24,18 +24,7 @@ const List = (props) => {
             {/* <p>ID: {props.post.id}</p> */}
             <h3>title: {props.post.title}</h3>
             <StDiv icon>
-              {likeToggle ? (
-                <RiHeartPulseLine
-                  onClick={toggleButton}
-                  style={{ cursor: "pointer" }}
-                />
-              ) : (
-                <RiHeartPulseFill
-                  onClick={toggleButton}
-                  style={{ cursor: "pointer" }}
-                />
-              )}
-              {/* <RiHeartPulseFill /> */}
+              <RiHeartPulseFill />
               {/* <RiHeartPulseLine
                 onClick={toggleButton}
                 style={{ cursor: "pointer" }}
@@ -50,7 +39,9 @@ const List = (props) => {
             <RiUserHeartFill />
             <SPar>{props.post.views}</SPar>
           </StDiv>
-          <StButton onClick={() => navigate(`/lists/id`)}>Detail Page</StButton>
+          <StButton onClick={() => navigate(`/lists/${props.post.id}`)}>
+            Detail Page
+          </StButton>
         </StDiv>
       </StDiv>
     </StDiv>
