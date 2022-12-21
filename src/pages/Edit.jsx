@@ -35,7 +35,7 @@ const Post = () => {
     };
   };
 
-  const post = useSelector((state) => state.posts.posts);
+  const post = useSelector((state) => state.posts.post);
   console.log("posts???", post);
 
   useEffect(() => {
@@ -93,7 +93,7 @@ const Post = () => {
 
   const onEditHandler = (id, post) => {
     console.log(id);
-    dispatch(__editPost(id, post));
+    dispatch(__editPost({ id, post }));
   };
 
   return (

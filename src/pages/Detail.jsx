@@ -24,7 +24,7 @@ const Detail = () => {
     console.log(likeToggle);
   };
 
-  const posts = useSelector((state) => state.posts.posts);
+  const posts = useSelector((state) => state.posts.post);
   console.log("posts???", posts);
 
   const comments = useSelector((state) => state.posts.posts.commentList);

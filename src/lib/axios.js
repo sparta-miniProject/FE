@@ -2,7 +2,7 @@ import axios from "axios";
 
 // 기본 URL
 const instance = axios.create({
-  baseURL: "http://13.125.150.83/api/",
+  baseURL: "http://13.125.150.83/api",
   header: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
@@ -12,7 +12,7 @@ const instance = axios.create({
 
 // baseURL
 export const baseURL = axios.create({
-  baseURL: "http://13.125.150.83/api/",
+  baseURL: "http://13.125.150.83/api",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
@@ -34,14 +34,14 @@ export const apis = {
   postLogin: (login) => instance.post("/user/login", login),
   postSignup: (signup) => instance.post("/user/signup", signup),
   checkUserName: (username) => instance.get("/user/idCheck", username),
-  postLogout: () => instance.get("user/logout"),
+  postLogout: () => instance.get("/user/logout"),
 
   // 게시글 관련
   getPost: () => baseURL.get("/posts"),
   getIdPost: (id) => {
-    console.log("getpost", id);
-    baseURL.get(`/post/${id}`);
+    return baseURL.get(`/post/${id}`);
   },
+
   createPost: (post) => baseURL.post("/post", post),
   deletePost: (id) => baseURL.delete(`/post/${id}`),
   editPost: (id, post) => {
