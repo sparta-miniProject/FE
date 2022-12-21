@@ -25,7 +25,7 @@ export const __postSignup = async (post) => {
     // alert("회원가입 성공");
     return data;
   } catch (error) {
-    alert("error", error.response.data.msg);
+    alert(error.response.data.msg);
   }
 };
 

@@ -20,12 +20,14 @@ const SignUp = () => {
     })
       .then((res) => {
         console.log("signup res: ", res);
-        alert(res.data.msg);
+        if (res.data.statusCode === 200) {
+          alert(res.data.msg);
+        }
         // localStorage.setItem("id", res.headers.authorization);
         navigate("/login");
       })
       .catch((err) => {
-        console.log("error: ", err);
+        // console.log("error: ", err);
       });
   };
 
@@ -47,6 +49,9 @@ const SignUp = () => {
             id="username"
             value={username}
             onChange={setUserName}
+            required
+            minLength={4}
+            maxLength={10}
           />
           <StDiv checkid>
             <StButton
@@ -66,6 +71,9 @@ const SignUp = () => {
             id="password"
             value={password}
             onChange={setPassword}
+            required
+            minLength={8}
+            maxLength={15}
           />
           <StLabel htmlFor="checkpassword">CHECK PW</StLabel>
           <StInput
@@ -73,6 +81,9 @@ const SignUp = () => {
             id="checkpw"
             value={checkPassword}
             onChange={setCheckPassword}
+            required
+            minLength={8}
+            maxLength={15}
           />
         </StDiv>
       </div>

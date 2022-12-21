@@ -38,14 +38,16 @@ export const __addComment = createAsyncThunk(
   "addPost",
   async (payload, thunkAPI) => {
     try {
-      const data = await apis.createComment(payload);
+      const { username, review } = payload;
+      const data = await apis.createComment(username, review);
       //   const data = await axios.post(`http://localhost:3002/reviews`, payload);
       console.log("payload: ", payload);
-      console.log("data: ", data.data);
+      console.log("data: ", data);
       // const getId = data.data.filter((review) => review.postId === payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
       console.log(err);
+      console.log("payload: ", payload);
       return thunkAPI.rejectWithValue(err);
     }
   }
