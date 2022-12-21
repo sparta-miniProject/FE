@@ -55,11 +55,11 @@ export const apis = {
   // 리뷰 관련
   getComment: (postId) => baseURL.get(`/post/${postId}`),
   createComment: (postId, comment) =>
-    baseURL.post(`/post/${postId}/comment`, comment),
+    baseURL.post(`/posts/${postId}/comment`, comment),
   deleteComment: (postId, commendId) =>
-    baseURL.delete(`/post/${postId}/${commendId}`),
+    baseURL.delete(`/posts/${postId}/${commendId}`),
   editComment: (postId, commendId) =>
-    baseURL.patch(`/post/${postId}/${commendId}`),
+    baseURL.patch(`/posts/${postId}/${commendId}`),
 
   // 좋아요 관련
   likeToggle: (postId) => baseURL.post(`/post/like/${postId}`),

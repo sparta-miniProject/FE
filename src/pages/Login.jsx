@@ -38,6 +38,9 @@ const Login = () => {
             id="username"
             value={username}
             onChange={setUserName}
+            required
+            minLength={4}
+            maxLength={10}
           />
           <StLabel htmlFor="password">PW</StLabel>
           <StInput
@@ -45,6 +48,9 @@ const Login = () => {
             id="password"
             value={password}
             onChange={setPassword}
+            required
+            minLength={8}
+            maxLength={15}
           />
         </StDiv>
       </div>

@@ -2,19 +2,20 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { __getIdPost } from "../redux/modules/postSlice";
+import { __deletePost, __getIdPost } from "../redux/modules/postSlice";
 import {
   RiUserHeartFill,
   RiHeartPulseFill,
   RiHeartPulseLine,
 } from "react-icons/ri";
+import { __addComment } from "../redux/modules/commentSlice";
 
 const Detail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const param = useParams();
-  const [contents, setContents] = useState("");
-  const [title, setTitle] = useState("");
+  // const [contents, setContents] = useState("");
+  const [review, setReview] = useState("");
 
   const [likeToggle, setLikeToggle] = useState(false);
 
@@ -26,9 +27,20 @@ const Detail = () => {
   const posts = useSelector((state) => state.posts.posts);
   console.log("posts???", posts);
 
+  const comments = useSelector((state) => state.posts.posts.commentList);
+  console.log("comments???", comments);
+
   useEffect(() => {
     dispatch(__getIdPost(+param.id));
   }, [dispatch, param.id]);
+
+  const onAddReviewHandler = (username, review) => {
+    dispatch(__addComment(username, review));
+  };
+
+  const onDeletePost = (id) => {
+    dispatch(__deletePost(id));
+  };
 
   return (
     <StDiv detailbox>
@@ -69,10 +81,16 @@ const Detail = () => {
               <p>{posts.username}</p>
             </StDiv>
             <StDiv cardbtns>
-              <StButton txtmodi onClick={() => navigate(`/edit/${param.id}`)}>
+              <StButton onClick={() => navigate(`/edit/${param.id}`)}>
                 수정하기
               </StButton>
-              <StButton txtdel onClick={() => navigate("/lists")}>
+              <StButton
+                carddel
+                onClick={() => {
+                  onDeletePost(+param.id);
+                  navigate("/lists");
+                }}
+              >
                 삭제하기
               </StButton>
             </StDiv>
@@ -80,17 +98,40 @@ const Detail = () => {
         </StDiv>
       </StSection>
       <StSection commentcard>
-        <div>
+        <StDiv commenttit>
           <h1>Comments</h1>
-          <button onClick={() => navigate("/lists")}>이전으로</button>
-        </div>
-        <div>
-          <input type="text"></input>
-          <button>추가</button>
-        </div>
-        <div>
-          <button>삭제</button>
-        </div>
+          <StButton comback onClick={() => navigate("/lists")}>
+            이전으로
+          </StButton>
+        </StDiv>
+        <StDiv commentinp>
+          <StInput
+            type="text"
+            onChange={(e) => {
+              const { value } = e.target;
+              setReview({
+                ...review,
+                comment: value,
+              });
+            }}
+          ></StInput>
+          <StButton
+            onClick={() => {
+              onAddReviewHandler(+param.id, review);
+            }}
+          >
+            추가
+          </StButton>
+        </StDiv>
+        <StDiv commentbox>
+          {comments?.map((comment) => (
+            <div key={comment.id}>
+              <p>{comment.username}</p>
+              <p>{comment.comment}</p>
+              <StButton commentdel>삭제</StButton>
+            </div>
+          ))}
+        </StDiv>
       </StSection>
     </StDiv>
   );
@@ -135,6 +176,28 @@ const StDiv = styled.div`
     css`
       display: flex;
       gap: 10px;
+      margin-top: 10px;
+    `}
+    ${(props) =>
+    props.commenttit &&
+    css`
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    `}
+    ${(props) =>
+    props.commentinp &&
+    css`
+      margin-bottom: 30px;
+    `}
+    ${(props) =>
+    props.commentbox &&
+    css`
+      width: 500px;
+      height: 345px;
+      background-color: burlywood;
+      border-radius: 10px;
     `}
 `;
 
@@ -149,7 +212,7 @@ const StSection = styled.section`
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      border-radius: 5px;
+      border-radius: 10px;
     `}
   ${(props) =>
     props.commentcard &&
@@ -161,6 +224,20 @@ const StSection = styled.section`
     `}
 `;
 
+const StInput = styled.input`
+  width: 370px;
+  height: 15px;
+  padding: 10px;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid burlywood;
+  color: burlywood;
+  font-weight: bold;
+  margin-right: 10px;
+  &:focus {
+    outline: none;
+  }
+`;
 const StButton = styled.button`
   width: 100px;
   height: 30px;
@@ -168,12 +245,52 @@ const StButton = styled.button`
   border-radius: 5px;
   background-color: transparent;
   color: burlywood;
-  ${(props) => props.txtmodi && css``}
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    background-color: burlywood;
+    color: #0a0327;
+  }
+  ${(props) =>
+    props.comback &&
+    css`
+      background-color: burlywood;
+      color: #0a0327;
+      border: 0;
+      transition: 0.2s;
+      &:hover {
+        background-color: #0a0327;
+        color: burlywood;
+        border: 1px solid burlywood;
+      }
+    `}
+  ${(props) =>
+    props.carddel &&
+    css`
+      background-color: burlywood;
+      color: #0a0327;
+      border: 0;
+      transition: 0.2s;
+      &:hover {
+        background-color: #0a0327;
+        color: burlywood;
+        border: 1px solid burlywood;
+      }
+    `}
+    ${(props) =>
+    props.commentdel &&
+    css`
+      border: 1px solid burlywood;
+      background-color: #0a0327;
+      color: burlywood;
+      cursor: pointer;
+    `}
 `;
 
 const StImg = styled.img`
   width: 300px;
   height: 200px;
+  background-image: url("https://cdn.discordapp.com/attachments/1054936032312819785/1055014590309732432/image.jpg");
 `;
 
 const StP = styled.p`
