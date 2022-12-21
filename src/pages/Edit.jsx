@@ -1,70 +1,126 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { apis } from "../lib/axios";
 import Button from "../components/button/Button";
+import { useDispatch } from "react-redux";
+import { __editPost, __getIdPost } from "../redux/modules/postSlice";
+import { useSelector } from "react-redux";
 
-const Edit = () => {
-  const param = useParams();
+// import axios from "axios";
+
+const Post = () => {
   const navigate = useNavigate();
-  const [editPost, setEditPost] = useState({});
+  const param = useParams();
+  const [editpost, setEditPost] = useState({});
   const [imageUrl, setImageUrl] = useState(null);
   const imgRef = useRef();
-  const [post, setPosts] = useState([]);
+  // const [post, setPost] = useState();
+  const dispatch = useDispatch();
 
-  const onEditImage = (id, post) => {
-    apis.editPosts(id, post);
-    console.log(id);
-    console
-      .log(post)
-      .then((res) => {
-        //   window.location.href = "/lists";
-      })
+  const onChangeImage = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    // const file = imgRef.current.files[0];
+    console.log(file);
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImageUrl(reader.result);
+      // const image = reader.result;
+      setEditPost({
+        ...editpost,
 
-      .catch((err) => {
-        // console.log(err);
+        imageUrl: reader.result,
       });
+    };
   };
+
+  const post = useSelector((state) => state.posts.posts);
+  console.log("posts???", post);
 
   useEffect(() => {
-    apis
-      .getIdPost(param.id)
-      .then((res) => {
-        const get = res.data;
-        setPosts(get);
-      })
-      .catch((err) => {
-        // console.log(err);
-      });
-  }, [param.id]);
+    dispatch(__getIdPost(+param.id));
+  }, [dispatch, param.id]);
+  // console.log(imageUrl);
+  // const [imageUrl, setImageUrl] = useState("디폴트 이미지 주소");
+  // const setFile = (e) => {};
 
-  const onEditPost = (id, post) => {
-    apis
-      .editPost(id, post)
-      .then((res) => {
-        //   window.location.href = "/lists";
-      })
-      .catch((err) => {
-        // console.log(err);
-      });
+  // const setFileImage = (e) => {
+  //   if (e.target.files[0]) {
+  //     const formdata = new FormData();
+  //     formdata.append("imageUrl", e.target.files[0]);
+  //     formdata.append("title", title);
+  //     formdata.append("content", content);
+  //     formdata.append("category", category);
+
+  //     apis
+  //       .post("http://13.125.150.83/api/post", formdata)
+  //       .then((res) => {
+  //         if (res.data.result === "SUCCESS") {
+  //           window.alert("SUCCESS");
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.error(err);
+  //       });
+  //   }
+  // };
+
+  // {
+  //   title: "",
+  //   file: "",
+  // }
+
+  // const [post, setPost] = useState({
+  //   title: "",
+  //   imageUrl: "",
+  //   content: "",
+  //   category: "",
+  // });
+  // const [posts, setPosts] = useState([]);
+
+  // useEffect(() => {
+  //   apis
+  //     .getPost()
+  //     .then((res) => {
+  //       const get = res.data;
+  //       setPost(get);
+  //     })
+  //     .catch((err) => {
+  //       // console.log(err);
+  //     });
+  // }, []);
+
+  const onEditHandler = (id, post) => {
+    console.log(id);
+    dispatch(__editPost(id, post));
   };
-  // 왜 렌더링이 안되는가?
 
   return (
     <StDiv>
-      <StForm>
-        <StH1>당신의 레시피를 수정해보세요!</StH1>
+      <StForm
+        onSubmit={(e) => {
+          e.preventDefault();
+          onEditHandler(Number(param.id), editpost);
+          // navigate("/lists");
+          console.log(param.id);
+        }}
+      >
+        <StH1>당신의 레시피는?</StH1>
         <StLabel htmlFor="category">카테고리</StLabel>
+        <br></br>
         <StSelect
           type="select"
           name="category"
           id="category"
           required
+          defaultValue={post.category}
+          placeholder="카테고리를 선택해주세요."
           onChange={(ev) => {
             const { value } = ev.target;
             setEditPost({
-              ...editPost,
-              // id: Math.floor(Math.random() * 10000),
+              ...editpost,
+
               category: value,
             });
           }}
@@ -74,84 +130,94 @@ const Edit = () => {
           <option value="recipe">🥇 황 금 비 율 🥇</option>
           <option value="food">🍲 안 주 🍲</option>
         </StSelect>
+        <br></br>
         <StLabel htmlFor="title">제목</StLabel>
+        <br></br>
         <StInput
           type="text"
           name="title"
           id="title"
-          maxLength={15}
+          maxLength={20}
           minLengt={3}
-          defaultValue={post.title ? post.title : ""}
+          placeholder="나만의 레시피 제목을 정해주세요"
+          required
+          defaultValue={post.title}
           onChange={(ev) => {
             const { value } = ev.target;
             setEditPost({
-              ...editPost,
+              ...editpost,
+
               title: value,
             });
           }}
-        />
+        ></StInput>
+        <br></br>
         <StLabel htmlFor="imgurl">이미지</StLabel>
-
+        <br></br>
         {/* <React.Fragment>
       <img src={"/img/profile.png"}></img>
       <input type="file" ref={imgRef} onChange={onChangeImage}></input>
     </React.Fragment>
   ); */}
         <StImage
+          required
+          placeholder=""
           type="file"
-          name="imgurl"
-          id="imgurl"
-          defaultValue={post.imgurl ? post.imgurl : ""}
-          onChange={(ev) => {
-            const { value } = ev.target;
-            setEditPost({
-              ...editPost,
-              imgurl: value,
-            });
-          }}
+          name="imageUrl"
+          id="imageUrl"
+          defaultValue={imageUrl}
+          // onChange={(ev) => {
+          //   const {  } = ev.target;
+          //   setPost({
+          //     ...post,
+
+          //     imageUrl: {},
+          //   });
+          // }}
         >
           <img
-            alt="이미지 넣어주라능~"
-            src={imageUrl ? imageUrl : ""}
+            alt=""
+            src={imageUrl ? imageUrl : post.imageUrl}
             width="500px"
             height="450px"
           ></img>
           <input
             type="file"
             ref={imgRef}
-            onChange={setImageUrl}
+            onChange={onChangeImage}
+            //onChange={setFileImage}
             width="500px"
           ></input>
         </StImage>
-
+        <br></br>
         <StLabel htmlFor="content">내용</StLabel>
+        <br></br>
         <StTextarea
           required
+          defaultValue={post.content}
           maxLength={200}
           minLength={10}
           placeholder="레시피를 자세히 소개해주세요!"
-          defaultValue={post.content ? post.content : ""}
           name="content"
           id="content"
           cols="40"
           rows="10"
           onChange={(ev) => {
             const { value } = ev.target;
-            onEditPost({
-              ...editPost,
+            setEditPost({
+              ...editpost,
+
               content: value,
             });
           }}
         ></StTextarea>
+        <br></br>
         <div>
           <Button
             add
-            onClick={(e) => {
-              e.preventDefault();
-              // onSubmitHandler(editRecipe);
-              onEditImage(param.id, editPost);
-              navigate("/lists");
-            }}
+            // onClick={() => {
+            //   navigate("/lists");
+            // }}
           >
             수정하기
           </Button>
@@ -159,12 +225,14 @@ const Edit = () => {
           <Button
             back
             onClick={() => {
-              navigate("/lists");
+              navigate("/main");
             }}
           >
             Back
           </Button>
           {/* </Link> */}
+          <br></br>
+          <br></br>
         </div>
       </StForm>
     </StDiv>
@@ -176,7 +244,7 @@ const StDiv = styled.div`
   width: 95%;
   min-height: 150vh;
   /* filter: brightness(1); */
-  background-image: url("https://img.freepik.com/premium-vector/seamless-pattern-with-soju-bottles-bottles-with-korean-letters-meaning-burned-liquor_197792-1639.jpg?w=2000");
+  /* background-image: url("https://img.freepik.com/premium-vector/seamless-pattern-with-soju-bottles-bottles-with-korean-letters-meaning-burned-liquor_197792-1639.jpg?w=2000"); */
   /* background-image: linear-gradient(
       0deg,
       rgba(0, 0, 0, 0.096),
@@ -184,12 +252,13 @@ const StDiv = styled.div`
     ),
     url("https://media.discordapp.net/attachments/1037267111585792020/1052637612629823518/image0.jpg"); */
   background-size: cover;
-  opacity: 0.8;
+  opacity: 1;
 `;
 
 const StForm = styled.form`
-  /* background-color: aqua; */
-  max-width: 1000px;
+  border-radius: 5px;
+  max-width: 800px;
+  border: 1px solid burlywood;
   width: 95%;
   display: flex;
   flex-direction: column;
@@ -202,14 +271,14 @@ const StForm = styled.form`
 
 const StH1 = styled.h1`
   padding-top: 100px;
-  color: black;
+  color: burlywood;
   font-size: 50px;
   margin-bottom: 70px;
   /* background-color: #b0c4cc;
   border-radius: 20px; */
 `;
 const StLabel = styled.label`
-  color: black;
+  color: burlywood;
   font-size: 20px;
   margin: 10px;
   font-weight: bold;
@@ -217,15 +286,15 @@ const StLabel = styled.label`
 
 const StInput = styled.input`
   font-weight: bold;
-  color: black;
+  color: burlywood;
   text-align: center;
   width: 500px;
   height: 30px;
-  border-radius: 10px;
+
   border: 0;
-  border-bottom: 3px solid #4ea1ba;
+  border-bottom: 1px solid burlywood;
   background-color: transparent;
-  background-color: #d6edf8;
+  background-color: #0a0327;
   font-size: 20px;
   padding: 10px;
 
@@ -236,37 +305,56 @@ const StInput = styled.input`
 
 const StTextarea = styled.textarea`
   width: 500px;
-  border-radius: 10px;
   border: 0;
-  border-bottom: 3px solid #4ea1ba;
-  background-color: #d6edf8;
+  border-bottom: 1px solid burlywood;
+  background-color: #0a0327;
   font-size: 20px;
   padding: 10px;
   opacity: 0.9;
+  color: burlywood;
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
   &:focus {
     outline: none;
   }
 `;
+
 const StSelect = styled.select`
+  background-color: #0a0327;
   text-align: center;
   font-size: 20px;
+  color: burlywood;
   width: 300px;
   padding: 5px;
-  border: 1px solid #999;
+  border: 1px solid burlywood;
   font-family: "Nanumgothic";
-  border-radius: 3px;
+  border-radius: 5px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: burlywood;
+    color: #0a0327;
+  }
 `;
 
 const StImage = styled.div`
   align-items: center;
   width: 500px;
+  height: 490px;
+  border: none;
+  background: transparent;
+  border: 1px solid burlywood;
+  border-radius: 5px;
 `;
-const StImageSize = styled.image`
-  width: 100px;
-  height: 50px;
-`;
-export default Edit;
+// const StImageSize = styled.image`
+//   width: 100px;
+//   height: 50px;
+// `;
+
+export default Post;

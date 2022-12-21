@@ -28,6 +28,23 @@ export const __getPost = createAsyncThunk(
     }
   }
 );
+// top5 데이터 불러오기
+
+export const __topPost = createAsyncThunk(
+  "topPost",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await apis.topPost();
+      console.log("payload: ", payload);
+      console.log("data: ", data.data);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (err) {
+      console.log(err);
+
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
 
 // 해당 아이디 값 데이터 불러오기 (안먹힘....)
 export const __getIdPost = createAsyncThunk(
@@ -121,6 +138,24 @@ export const postSlice = createSlice({
       state.posts = action.payload;
     },
     [__getPost.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+      // 에러 발생-> 네트워크 요청은 끝,false
+      // catch 된 error 객체를 state.error에 넣습니다.
+    },
+
+    // top5 데이터 가져오기
+
+    [__topPost.pending]: (state) => {
+      state.isLoading = true;
+      // 네트워크 요청 시작-> 로딩 true 변경합니다.
+    },
+    [__topPost.fulfilled]: (state, action) => {
+      // action으로 받아온 객체를 store에 있는 값에 넣어준다
+      state.isLoading = false;
+      state.posts = action.payload;
+    },
+    [__topPost.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
       // 에러 발생-> 네트워크 요청은 끝,false

@@ -4,9 +4,13 @@ import { useNavigate } from "react-router-dom";
 import "./main.css";
 import Lottie from "lottie-react";
 import { food } from "../assets";
-
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { __topPost } from "../redux/modules/postSlice";
 // import AllList from "./AllList";
+
 import axios from "axios";
+
 // import List from "../components/list/List";
 // import Lottie from "lottie-react";
 // import { starlight } from "../assets";
@@ -19,17 +23,28 @@ const TOTAL_SLIDES = 4; // 전체 슬라이드 개수(총3개. 배열로 계산
 
 export default function Main() {
   const navigate = useNavigate();
-  const [post, setPosts] = useState([]);
+  // const [post, setPosts] = useState([]);
+
+  const dispatch = useDispatch();
+
   // const [isOpen, setIsOpen] = useState(false);
-  const fetchRecipes = async () => {
-    const { data } = await axios.get("http://localhost:3005/post");
-    console.log(data);
-    setPosts(data);
-  };
+
+  const posts = useSelector((state) => state.posts.posts);
+  console.log("posts???", posts);
 
   useEffect(() => {
-    fetchRecipes();
-  }, []);
+    dispatch(__topPost());
+  }, [dispatch]);
+
+  // const fetchRecipes = async () => {
+  //   const { data } = await axios.get("http://localhost:3005/post");
+  //   console.log(data);
+  //   setPosts(data);
+  // };
+
+  // useEffect(() => {
+  //   fetchRecipes();
+  // }, []);
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentSlide2, setCurrentSlide2] = useState(0);
@@ -168,7 +183,7 @@ export default function Main() {
           </Text>
 
           <SliderContainer id="testbutton" ref={slideRef}>
-            {post.map((data) => {
+            {posts.map((data) => {
               if (data.category === "drink") {
                 console.log(data);
                 return (
@@ -202,7 +217,7 @@ export default function Main() {
             </AddWatch>
           </Text>
           <SliderContainer ref={slideRef2}>
-            {post.map((data) => {
+            {posts.map((data) => {
               if (data.category === "recipe") {
                 console.log(data);
                 return (
@@ -236,7 +251,7 @@ export default function Main() {
             </AddWatch>
           </Text>
           <SliderContainer ref={slideRef3}>
-            {post.map((data) => {
+            {posts.map((data) => {
               if (data.category === "food") {
                 console.log(data);
                 return (
@@ -291,7 +306,7 @@ const AddWatch = styled.div`
   cursor: pointer;
   &:hover {
     background-color: burlywood;
-    color: #fff;
+    color: #0a0327;
   }
 `;
 const SliderContainer = styled.div`
