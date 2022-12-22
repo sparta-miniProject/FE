@@ -303,7 +303,9 @@ const StDiv = styled.div`
       border-radius: 10px;
       padding: 10px;
       overflow: scroll;
-      &::-webkit-scrollbar {     display: none;   }
+      &::-webkit-scrollbar {
+        display: none;
+      }
     `}
     ${(props) =>
     props.commsty &&
@@ -446,7 +448,9 @@ const StP = styled.p`
     css`
       height: 135px;
       overflow: scroll;
-      &::-webkit-scrollbar {     display: none;   }
+      &::-webkit-scrollbar {
+        display: none;
+      }
     `}
 `;
 
