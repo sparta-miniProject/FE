@@ -33,7 +33,7 @@ export const apis = {
   // 로그인 관련
   postLogin: (login) => instance.post("/user/login", login),
   postSignup: (signup) => instance.post("/user/signup", signup),
-  checkUserName: (username) => instance.get("/user/idCheck", username),
+  checkUserName: (username) => instance.get(`/user/idCheck/${username}`),
   postLogout: () => instance.get("/user/logout"),
 
   // 게시글 관련

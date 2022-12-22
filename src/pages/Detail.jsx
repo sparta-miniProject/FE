@@ -1,13 +1,15 @@
 import { useNavigate, useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { __deletePost, __getIdPost } from "../redux/modules/postSlice";
 import {
   RiUserHeartFill,
   RiHeartPulseFill,
   RiHeartPulseLine,
+  RiUserVoiceFill,
 } from "react-icons/ri";
+import { FaCommentDots } from "react-icons/fa";
 import {
   __addComment,
   __deleteComment,
@@ -95,6 +97,7 @@ const Detail = () => {
             <StDiv titlike>
               <h1 style={{ wordBreak: "break-all" }}>{posts.title}</h1>
               <StDiv liketoggle>
+                {/* 적용이 안됨.. */}
                 {likeToggle === true ? (
                   <RiHeartPulseFill
                     onClick={() => {
@@ -115,13 +118,13 @@ const Detail = () => {
                 onClick={toggleButton}
                 style={{ cursor: "pointer" }}
               ></RiHeartPulseLine> */}
-                <StP>
+                {/* <StP>
                   {posts.like}
-                  {/* / {count} */}
-                </StP>
+                  / {count}
+                </StP> */}
               </StDiv>
             </StDiv>
-            <p>{posts.content}</p>
+            <StP cont>{posts.content}</StP>
           </StDiv>
           <StDiv tcard_2>
             <StDiv countuser>
@@ -157,6 +160,7 @@ const Detail = () => {
         <StDiv commentinp>
           <StInput
             type="text"
+            value={review.content}
             onChange={(e) => {
               const { value } = e.target;
               setReview({
@@ -169,20 +173,29 @@ const Detail = () => {
         </StDiv>
         <StDiv commentbox>
           <StDiv commsty>
-            <StP commlist>NICKNAME</StP>
-            <StP commlist>COMMENT</StP>
+            <StP commlist>
+              NICKNAME
+              <RiUserVoiceFill />
+            </StP>
+            <StP commlist>
+              COMMENT
+              <FaCommentDots />
+            </StP>
             <span></span>
           </StDiv>
           <hr style={{ border: "1px solid #0a0327" }} />
           {comments?.map((comment) => (
             <StDiv commsty key={comment.id}>
               {isCommentChange === false ? (
-                <StDiv commsty>
-                  <StP commlist>{comment.username}</StP>
+                <StDiv commsty key={comment.id}>
+                  <StP commlist>
+                    {comment.username}
+                    <RiUserVoiceFill />
+                  </StP>
                   <StP commlist>{comment.content}</StP>
                 </StDiv>
               ) : (
-                <div>
+                <StDiv commsty key={comment.id}>
                   <StP commlist>{comment.username}</StP>
                   <StInput
                     modinput
@@ -197,7 +210,7 @@ const Detail = () => {
                       console.log("editComment-------->", editComment);
                     }}
                   ></StInput>
-                </div>
+                </StDiv>
               )}
               <div>
                 <StButton
@@ -284,16 +297,18 @@ const StDiv = styled.div`
     ${(props) =>
     props.commentbox &&
     css`
-      width: 500px;
-      height: 345px;
+      width: 480px;
+      height: 325px;
       background-color: burlywood;
       border-radius: 10px;
+      padding: 10px;
+      overflow: scroll;
     `}
     ${(props) =>
     props.commsty &&
     css`
       display: flex;
-      padding: 10px;
+      /* padding: 10px; */
       justify-content: space-between;
     `}
 `;
@@ -337,6 +352,7 @@ const StInput = styled.input`
   ${(props) =>
     props.modinput &&
     css`
+      width: 320px;
       border-bottom: 1px solid #0a0327;
       color: #0a0327;
     `}
@@ -422,6 +438,13 @@ const StP = styled.p`
     props.commlist &&
     css`
       color: #0a0327;
+      margin-right: 5px;
+    `}
+  ${(props) =>
+    props.cont &&
+    css`
+      height: 135px;
+      overflow: scroll;
     `}
 `;
 

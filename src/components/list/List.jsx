@@ -1,20 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
-import {
-  RiUserHeartFill,
-  RiHeartPulseFill,
-  RiHeartPulseLine,
-} from "react-icons/ri";
+import { RiUserHeartFill, RiHeartPulseFill } from "react-icons/ri";
 import { useState } from "react";
 
 const List = (props) => {
   const navigate = useNavigate();
-  const [likeToggle, setLikeToggle] = useState(false);
 
-  const toggleButton = () => {
-    setLikeToggle((likeToggle) => !likeToggle);
-    console.log(likeToggle);
-  };
   return (
     <StDiv card>
       <StImg src={props.post.imageUrl} alt="img" />
@@ -22,7 +13,7 @@ const List = (props) => {
         <div>
           <StDiv h3>
             {/* <p>ID: {props.post.id}</p> */}
-            <h3>title: {props.post.title}</h3>
+            <h3>{props.post.title}</h3>
             <StDiv icon>
               <RiHeartPulseFill />
               {/* <RiHeartPulseLine
@@ -32,7 +23,7 @@ const List = (props) => {
               <p>{props.post.like}</p>
             </StDiv>
           </StDiv>
-          <p>content: {props.post.content}</p>
+          <StP>{props.post.content}</StP>
         </div>
         <StDiv clicknum>
           <StDiv clicked>
@@ -121,6 +112,11 @@ const StButton = styled.button`
     color: burlywood;
     border: 1px solid burlywood;
   }
+`;
+
+const StP = styled.p`
+  height: 110px;
+  overflow: scroll;
 `;
 
 export default List;

@@ -94,6 +94,7 @@ export const __deletePost = createAsyncThunk(
       //   `http://localhost:3002/recipes/${payload}`
       // );
       console.log("data: ", data.data.msg);
+      alert(data.data.msg);
       // if (data.data.statusCode === 400) {
       //   alert(data.data.msg);
       //   return;
@@ -143,6 +144,23 @@ export const __likeToggle = createAsyncThunk(
     }
   }
 );
+
+// // id 중복체크
+// export const __checkUserName = createAsyncThunk(
+//   "checkUserName",
+//   async (payload, thunkAPI) => {
+//     try {
+//       const data = await apis.checkUserName(payload);
+//       // const data = await axios.post("http://localhost:3002/recipes", payload);
+//       console.log("payload: ", payload);
+//       console.log("data: ", data.data);
+//       return thunkAPI.fulfillWithValue(data.data);
+//     } catch (err) {
+//       console.log(err);
+//       return thunkAPI.rejectWithValue(err);
+//     }
+//   }
+// );
 
 export const postSlice = createSlice({
   name: "post",
@@ -214,7 +232,7 @@ export const postSlice = createSlice({
       state.error = action.payload;
     },
 
-    // 레시피 삭제 ------------------
+    // 게시글 삭제 ------------------
     [__deletePost.pending]: (state) => {
       state.isLoading = true;
     },
@@ -274,6 +292,23 @@ export const postSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+
+    // // 아이디 중복체크
+    // [__checkUserName.pending]: (state) => {
+    //   state.isLoading = true;
+    //   // 네트워크 요청 시작-> 로딩 true 변경합니다.
+    // },
+    // [__checkUserName.fulfilled]: (state, action) => {
+    //   // action으로 받아온 객체를 store에 있는 값에 넣어준다
+    //   state.isLoading = false;
+    //   state.posts = action.payload;
+    // },
+    // [__checkUserName.rejected]: (state, action) => {
+    //   state.isLoading = false;
+    //   state.error = action.payload;
+    //   // 에러 발생-> 네트워크 요청은 끝,false
+    //   // catch 된 error 객체를 state.error에 넣습니다.
+    // },
   },
 });
 
