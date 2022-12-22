@@ -35,14 +35,14 @@ export const __getComment = createAsyncThunk(
 
 // review 추가
 export const __addComment = createAsyncThunk(
-  "addPost",
+  "addComment",
   async (payload, thunkAPI) => {
     try {
-      const { username, review } = payload;
-      const data = await apis.createComment(username, review);
-      //   const data = await axios.post(`http://localhost:3002/reviews`, payload);
+      const [id, comment] = payload;
       console.log("payload: ", payload);
-      console.log("data: ", data);
+      const data = await apis.createComment(id, comment);
+      //   const data = await axios.post(`http://localhost:3002/reviews`, payload);
+      console.log("data: ", data.data);
       // const getId = data.data.filter((review) => review.postId === payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
@@ -58,12 +58,15 @@ export const __deleteComment = createAsyncThunk(
   "deleteComment",
   async (payload, thunkAPI) => {
     try {
-      const data = await apis.deleteComment(payload);
+      console.log("payload: ", payload);
+      const data = await apis.deleteComment(payload.postId, payload.commentId);
       //   const data = await axios.delete(
       //     `http://localhost:3002/reviews/${payload}`
       //   );
-      console.log("payload: ", payload);
-      console.log("data: ", data.data);
+      console.log("data: ", data);
+      if (data.data.statusCode === 200) {
+        alert(data.data.msg);
+      }
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       console.log(err);
@@ -76,11 +79,14 @@ export const __editComment = createAsyncThunk(
   "editComment",
   async (payload, thunkAPI) => {
     try {
-      const { id, recipe } = payload;
       console.log("payload: ", payload);
-      const data = await apis.editComment(id, recipe);
+      const data = await apis.editComment(
+        payload.postId,
+        payload.commentId,
+        payload.editComment
+      );
       console.log("data: ", data.data);
-      return thunkAPI.fulfillWithValue(payload);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
       console.log(err);
       return thunkAPI.rejectWithValue(err);
@@ -128,9 +134,10 @@ export const commentSlice = createSlice({
     [__deleteComment.fulfilled]: (state, action) => {
       // 미들웨어를 통해 받은 action값이 무엇인지 항상 확인한다
       console.log("action: ", action.payload);
+      console.log("state------>", state);
       state.isLoading = false;
       state.comments = state.comments.filter(
-        (comment) => comment.id !== action.payload
+        (comment) => comment.commentId !== action.payload.commentId
       );
     },
     [__deleteComment.rejected]: (state, action) => {
@@ -146,18 +153,17 @@ export const commentSlice = createSlice({
       // console.log('state-store값',state.diary)
       console.log("action-서버값", action);
       state.isLoading = false;
-      state.comments = state.comments.map((com) =>
-        com.id === action.payload.id
-          ? {
-              ...com,
-              comment: action.payload.data.comment,
-            }
-          : com
+      const index = state.comments.findIndex(
+        (comment) => comment.commentId === action.payload.commentId
       );
+      console.log("index----->", index);
+      console.log("action.payload----->", action.payload);
+      state.comments.splice(index, 1, action.payload);
     },
     [__editComment.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+      console.log("action.paylaod---->", action.payload);
     },
   },
 });
