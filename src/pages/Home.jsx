@@ -20,7 +20,7 @@ const Home = () => {
     <StDiv bg>
       <StDiv>
         {/* <StButton onClick={onClickTokenHandler}> */}
-        <StButton onClick={() => navigate('/main')}>
+        <StButton onClick={() => navigate("/main")}>
           <StSpan>
             <FaGlassCheers />
             고주망태가 되어라 얍!?

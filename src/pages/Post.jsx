@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { apis } from "../lib/axios";
+// import { apis } from "../lib/axios";
 import Button from "../components/button/Button";
 import { useDispatch } from "react-redux";
 import { __addPost } from "../redux/modules/postSlice";
@@ -11,13 +11,14 @@ import { __addPost } from "../redux/modules/postSlice";
 const Post = () => {
   const navigate = useNavigate();
 
-  const [imageUrl, setImageUrl] = useState(null);
+  // const [imageUrl, setImageUrl] = useState(null);
   const imgRef = useRef();
   // const [post, setPost] = useState();
   const dispatch = useDispatch();
 
   const onChangeImage = (event) => {
     const file = event.target.files[0];
+    setImageFile(file);
     const reader = new FileReader();
     // const file = imgRef.current.files[0];
     console.log(file);
@@ -33,42 +34,35 @@ const Post = () => {
     };
   };
   // console.log(imageUrl);
-  // const [imageUrl, setImageUrl] = useState("디폴트 이미지 주소");
+  const [imagefile, setImageFile] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [category, setCategory] = useState("");
+  const [post, setPost] = useState([]);
   // const setFile = (e) => {};
 
-  // const setFileImage = (e) => {
-  //   if (e.target.files[0]) {
+  // const setFileImage = (event) => {
+  //   if (event.target.files[0]) {
+  //     setImageFile(event.target.files[0]);
   //     const formdata = new FormData();
-  //     formdata.append("imageUrl", e.target.files[0]);
+  //     formdata.append("imageUrl", imagefile);
   //     formdata.append("title", title);
   //     formdata.append("content", content);
   //     formdata.append("category", category);
-
-  //     apis
-  //       .post("http://13.125.150.83/api/post", formdata)
-  //       .then((res) => {
-  //         if (res.data.result === "SUCCESS") {
-  //           window.alert("SUCCESS");
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         console.error(err);
-  //       });
+  //     console.log(formdata);
+  //     console.log(typeof formdata);
+  //     dispatch(__addPost(formdata));
+  //     console.log(title);
   //   }
   // };
 
-  // {
+  // const [post, setPost] = useState({
   //   title: "",
-  //   file: "",
-  // }
-
-  const [post, setPost] = useState({
-    title: "",
-    imageUrl: "",
-    content: "",
-    category: "",
-  });
-  // const [posts, setPosts] = useState([]);
+  //   imageUrl: "",
+  //   content: "",
+  //   category: "",
+  // });
 
   // useEffect(() => {
   //   apis
@@ -82,8 +76,19 @@ const Post = () => {
   //     });
   // }, []);
 
-  const onSubmitHandler = (post) => {
-    dispatch(__addPost(post));
+  const onSubmitHandler = () => {
+    const formdata = new FormData();
+    formdata.append("imageUrl", imagefile);
+    formdata.append("title", title);
+    formdata.append("content", content);
+    formdata.append("category", category);
+    console.log(formdata);
+    console.log(typeof formdata);
+    dispatch(__addPost(formdata));
+
+    // for (const pair of formdata) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
   };
 
   return (
@@ -106,8 +111,8 @@ const Post = () => {
           placeholder="카테고리를 선택해주세요."
           onChange={(ev) => {
             const { value } = ev.target;
-            setPost({
-              ...post,
+            setCategory({
+              ...category,
 
               category: value,
             });
@@ -131,8 +136,9 @@ const Post = () => {
           required
           onChange={(ev) => {
             const { value } = ev.target;
-            setPost({
-              ...post,
+            console.log("title", title);
+            setTitle({
+              ...title,
 
               title: value,
             });
@@ -170,8 +176,8 @@ const Post = () => {
           <input
             type="file"
             ref={imgRef}
+            // onChange={onChangeImage}
             onChange={onChangeImage}
-            //onChange={setFileImage}
             width="500px"
           ></input>
         </StImage>
@@ -189,8 +195,8 @@ const Post = () => {
           rows="10"
           onChange={(ev) => {
             const { value } = ev.target;
-            setPost({
-              ...post,
+            setContent({
+              ...content,
 
               content: value,
             });
