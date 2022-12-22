@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { __topPost } from "../redux/modules/postSlice";
 // import AllList from "./AllList";
-
 import axios from "axios";
 
 // import List from "../components/list/List";
@@ -29,7 +28,7 @@ export default function Main() {
 
   // const [isOpen, setIsOpen] = useState(false);
 
-  const posts = useSelector((state) => state.posts.posts);
+  const { posts, isLoading, error } = useSelector((state) => state.posts);
   console.log("posts???", posts);
 
   useEffect(() => {
@@ -171,6 +170,11 @@ export default function Main() {
     slideRef3.current.style.transform = `translateX(-${currentSlide3}00%)`; // 백틱을 사용하여 슬라이드로 이동하는 에니메이션을 만듭니다.
   }, [currentSlide3]);
 
+  useEffect(() => {}, []);
+  if (isLoading) {
+    return;
+  }
+
   // <Lottie className="starlight" animationData={starlight} />;
   return (
     <div>
@@ -183,19 +187,20 @@ export default function Main() {
           </Text>
 
           <SliderContainer id="testbutton" ref={slideRef}>
-            {posts.map((data) => {
-              if (data.category === "drink") {
-                console.log(data);
-                return (
-                  <div key={data.id}>
-                    <StImg src={data.imgurl} />
-                    <StH>
-                      <h2>{data.title}</h2>
-                    </StH>
-                  </div>
-                );
-              }
-            })}
+            {posts.drinkList.length > 0 &&
+              posts.drinkList.map((data) => {
+                if (data.category === "drink") {
+                  console.log(data);
+                  return (
+                    <div key={data.id}>
+                      <StImg src={data.imageUrl} />
+                      <StH>
+                        <h2>{data.title}</h2>
+                      </StH>
+                    </div>
+                  );
+                }
+              })}
           </SliderContainer>
           <Center>
             <Button onClick={PrevSlide}>🔙</Button>
@@ -217,19 +222,20 @@ export default function Main() {
             </AddWatch>
           </Text>
           <SliderContainer ref={slideRef2}>
-            {posts.map((data) => {
-              if (data.category === "recipe") {
-                console.log(data);
-                return (
-                  <div key={data.id}>
-                    <StImg src={data.imgurl} />
-                    <StH>
-                      <h2>{data.title}</h2>
-                    </StH>
-                  </div>
-                );
-              }
-            })}
+            {posts.recipeList.length > 0 &&
+              posts.recipeList.map((data) => {
+                if (data.category === "recipe") {
+                  console.log(data);
+                  return (
+                    <div key={data.id}>
+                      <StImg src={data.imageUrl} />
+                      <StH>
+                        <h2>{data.title}</h2>
+                      </StH>
+                    </div>
+                  );
+                }
+              })}
           </SliderContainer>
           <Center>
             <Button onClick={PrevSlide2}>🔙</Button>
@@ -251,19 +257,20 @@ export default function Main() {
             </AddWatch>
           </Text>
           <SliderContainer ref={slideRef3}>
-            {posts.map((data) => {
-              if (data.category === "food") {
-                console.log(data);
-                return (
-                  <div key={data.id}>
-                    <StImg src={data.imgurl} />
-                    <StH>
-                      <h2>{data.title}</h2>
-                    </StH>
-                  </div>
-                );
-              }
-            })}
+            {posts.foodList.length > 0 &&
+              posts.foodList.map((data) => {
+                if (data.category === "food") {
+                  console.log(data);
+                  return (
+                    <div key={data.id}>
+                      <StImg src={data.imageUrl} />
+                      <StH>
+                        <h2>{data.title}</h2>
+                      </StH>
+                    </div>
+                  );
+                }
+              })}
           </SliderContainer>
           <Center>
             <Button onClick={PrevSlide3}>🔙</Button>

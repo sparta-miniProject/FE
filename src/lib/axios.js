@@ -42,12 +42,17 @@ export const apis = {
     return baseURL.get(`/post/${id}`);
   },
 
-  createPost: (post) => baseURL.post("/post", post),
+  createPost: (post) =>
+    baseURL.post("/post", post, {
+      headers: { "Content-Type": "multipart/form-data" },
+    }),
   deletePost: (id) => baseURL.delete(`/post/${id}`),
-  editPost: (id, post) => {
-    console.log("string", id, post);
-    baseURL.patch(`/post/${id}`, post);
-  },
+  editPost: (id, post) =>
+    // console.log("string", id, post);
+    baseURL.patch(`/post/${id}`, post, {
+      headers: { "Content-Type": "multipart/form-data" },
+    }),
+
   topPost: () => baseURL.get("/tops"),
 
   // category,title,imageUrl,post.like

@@ -12,14 +12,13 @@ import { useSelector } from "react-redux";
 const Post = () => {
   const navigate = useNavigate();
   const param = useParams();
-  const [editpost, setEditPost] = useState({});
-  const [imageUrl, setImageUrl] = useState(null);
   const imgRef = useRef();
   // const [post, setPost] = useState();
   const dispatch = useDispatch();
 
   const onChangeImage = (event) => {
     const file = event.target.files[0];
+    setImageFile(file);
     const reader = new FileReader();
     // const file = imgRef.current.files[0];
     console.log(file);
@@ -34,6 +33,13 @@ const Post = () => {
       });
     };
   };
+
+  const [imagefile, setImageFile] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [category, setCategory] = useState("");
+  const [editpost, setEditPost] = useState([]);
 
   const post = useSelector((state) => state.posts.post);
   console.log("posts???", post);
@@ -92,8 +98,17 @@ const Post = () => {
   // }, []);
 
   const onEditHandler = (id, post) => {
-    console.log(id);
+    const formdata = new FormData();
+    formdata.append("imageUrl", imagefile);
+    formdata.append("title", title);
+    formdata.append("content", content);
+    formdata.append("category", category);
+    console.log(formdata);
+    console.log(typeof formdata);
     dispatch(__editPost({ id, post }));
+    for (const pair of formdata) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
   };
 
   return (
@@ -118,8 +133,8 @@ const Post = () => {
           placeholder="카테고리를 선택해주세요."
           onChange={(ev) => {
             const { value } = ev.target;
-            setEditPost({
-              ...editpost,
+            setCategory({
+              ...category,
 
               category: value,
             });
@@ -144,8 +159,8 @@ const Post = () => {
           defaultValue={post.title}
           onChange={(ev) => {
             const { value } = ev.target;
-            setEditPost({
-              ...editpost,
+            setTitle({
+              ...title,
 
               title: value,
             });
@@ -204,8 +219,8 @@ const Post = () => {
           rows="10"
           onChange={(ev) => {
             const { value } = ev.target;
-            setEditPost({
-              ...editpost,
+            setContent({
+              ...content,
 
               content: value,
             });
