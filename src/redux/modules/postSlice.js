@@ -55,7 +55,7 @@ export const __getIdPost = createAsyncThunk(
       const data = await apis.getIdPost(payload);
       // const data = await axios.get(`http://localhost:3002/recipes/${payload}`);
       console.log("payload: ", payload);
-      console.log("data: ", data);
+      console.log("getIddata:: ", data);
       // const getId = data.data.filter((recipe) => recipe.id === payload)[0];
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
@@ -70,10 +70,11 @@ export const __addPost = createAsyncThunk(
   "addPost",
   async (payload, thunkAPI) => {
     try {
+      console.log("payload:::", payload);
       const data = await apis.createPost(payload);
       // const data = await axios.post("http://localhost:3002/recipes", payload);
-      console.log("payload: ", payload);
-      console.log("data: ", data.data);
+      // console.log("payload: ", payload);
+      console.log("addpostdata::: ", data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
       console.log(err);
@@ -110,9 +111,9 @@ export const __editPost = createAsyncThunk(
   "editPost",
   async (payload, thunkAPI) => {
     try {
-      const { id, post } = payload;
-      console.log("payload: ", payload);
-      const data = await apis.editPost(id, post);
+      const { id, formdata } = payload;
+      console.log("payload:::::: ", payload);
+      const data = await apis.editPost(id, formdata);
       // const data = await axios.patch(
       //   `http://localhost:3002/recipes/${recipeId}`,
       //   recipe

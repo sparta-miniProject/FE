@@ -97,19 +97,22 @@ const Post = () => {
 
   const onEditHandler = (id, post) => {
     const formdata = new FormData();
-    formdata.append("imageUrl", imagefile);
-    formdata.append("title", title);
-    formdata.append("content", content);
-    formdata.append("category", category);
+    formdata.append("file", imagefile);
+    formdata.append("title", title.title);
+    formdata.append("content", content.content);
+    formdata.append("category", category.category);
     console.log(formdata);
     console.log(typeof formdata);
-    dispatch(__editPost({ id, post }));
+    // dispatch(__editPost(formdata), { id, post });
+    dispatch(__editPost({ id, formdata }));
     for (const pair of formdata) {
+      // console.log("Editformdata :", formdata);
       console.log(pair[0] + ", " + pair[1]);
     }
   };
   const post = useSelector((state) => state.posts.post);
   console.log("posts???", post);
+
   return (
     <StDiv>
       <StForm
@@ -229,9 +232,9 @@ const Post = () => {
         <div>
           <Button
             add
-            // onClick={() => {
-            //   navigate("/lists");
-            // }}
+            onClick={() => {
+              navigate("/lists");
+            }}
           >
             수정하기
           </Button>
