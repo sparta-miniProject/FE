@@ -7,20 +7,20 @@ const Home = () => {
   const navigate = useNavigate();
 
   // 로그인 안하면 이용 불가
-  // const onClickTokenHandler = () => {
-  //   if (!localStorage.getItem("id")) {
-  //     alert("로그인 후 이용 가능합니다!");
-  //     return navigate("/login");
-  //   } else {
-  //     navigate("/main");
-  //   }
-  // };
+  const onClickTokenHandler = () => {
+    if (!localStorage.getItem("id")) {
+      alert("로그인 후 이용 가능합니다!");
+      return navigate("/login");
+    } else {
+      navigate("/main");
+    }
+  };
 
   return (
     <StDiv bg>
       <StDiv>
-        {/* <StButton onClick={onClickTokenHandler}> */}
-        <StButton onClick={() => navigate("/main")}>
+        <StButton onClick={onClickTokenHandler}>
+          {/* <StButton onClick={() => navigate("/main")}> */}
           <StSpan>
             <FaGlassCheers />
             고주망태가 되어라 얍!?

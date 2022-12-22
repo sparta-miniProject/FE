@@ -87,12 +87,16 @@ export const __deletePost = createAsyncThunk(
   "deletePost",
   async (payload, thunkAPI) => {
     try {
+      console.log("payload: ", payload);
       const data = await apis.deletePost(payload);
       // const data = await axios.delete(
       //   `http://localhost:3002/recipes/${payload}`
       // );
-      console.log("payload: ", payload);
-      console.log("data: ", data.data);
+      console.log("data: ", data.data.msg);
+      // if (data.data.statusCode === 400) {
+      //   alert(data.data.msg);
+      //   return;
+      // }
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       console.log(err);
@@ -116,6 +120,22 @@ export const __editPost = createAsyncThunk(
 
       console.log("data: ", data.data);
       return thunkAPI.fulfillWithValue(payload);
+    } catch (err) {
+      console.log(err);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const __likeToggle = createAsyncThunk(
+  "likeToggle",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await apis.likeToggle(payload);
+      // const data = await axios.post("http://localhost:3002/recipes", payload);
+      console.log("payload: ", payload);
+      console.log("data: ", data.data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
       console.log(err);
       return thunkAPI.rejectWithValue(err);
@@ -201,7 +221,8 @@ export const postSlice = createSlice({
       // 미들웨어를 통해 받은 action값이 무엇인지 항상 확인한다
       console.log("action: ", action.payload);
       state.isLoading = false;
-      state.posts = state.posts.filter((post) => post.id !== action.payload);
+      state.posts = state.posts?.filter((post) => post.id !== action.payload);
+      console.log("state------>", state.posts);
     },
     [__deletePost.rejected]: (state, action) => {
       state.isLoading = false;
@@ -234,6 +255,21 @@ export const postSlice = createSlice({
       // state.recipes.splice(index, 1, action.payload[1]);
     },
     [__editPost.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    // 좋아요 토글
+    [__likeToggle.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__likeToggle.fulfilled]: (state, action) => {
+      // 액션으로 받은 값 = payload 추가해준다.
+      console.log("action: ", action.payload);
+      state.isLoading = false;
+      state.posts = action.payload;
+    },
+    [__likeToggle.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
