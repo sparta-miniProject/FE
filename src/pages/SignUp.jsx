@@ -33,6 +33,7 @@ const SignUp = () => {
 
   // id 중복 체크 확인
   const onCheckUserName = (username) => {
+    console.log("username---->", username);
     __checkUserName(username).then((res) => {
       console.log(res);
     });

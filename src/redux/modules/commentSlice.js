@@ -86,6 +86,9 @@ export const __editComment = createAsyncThunk(
         payload.editComment
       );
       console.log("data: ", data.data);
+      if (data.data.statusCode === 200) {
+        alert(data.data.msg);
+      }
       return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
       console.log(err);
@@ -118,9 +121,10 @@ export const commentSlice = createSlice({
     },
     [__addComment.fulfilled]: (state, action) => {
       // 액션으로 받은 값 = payload 추가해준다.
-      console.log("action: ", action.payload);
+      console.log("action: ", action.payload[1]);
       state.isLoading = false;
       state.comments = [...state.comments, action.payload];
+      // state.posts.commentList.push(action.payload);
     },
     [__addComment.rejected]: (state, action) => {
       state.isLoading = false;

@@ -44,9 +44,13 @@ export const __checkUserName = async (username) => {
     const data = await apis.checkUserName(username);
     console.log("username: ", username);
     console.log("data: ", data);
+    if (data.data.statusCode === 200) {
+      alert(data.data.msg);
+    }
     // useSweet(1000, "success", "회원가입 성공");
     return data;
   } catch (error) {
+    alert(error.response.data.msg);
     // useSweet(1000, "error", error.response.data.msg);
   }
 };
