@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { RiUserHeartFill, RiHeartPulseFill } from "react-icons/ri";
-import { useState } from "react";
+// import { useState } from "react";
 
 const List = (props) => {
   const navigate = useNavigate();
@@ -117,6 +117,9 @@ const StButton = styled.button`
 const StP = styled.p`
   height: 110px;
   overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export default List;
