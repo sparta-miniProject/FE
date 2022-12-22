@@ -20,7 +20,7 @@ const Detail = () => {
   const dispatch = useDispatch();
   const param = useParams();
   // const [contents, setContents] = useState("");
-  const [review, setReview] = useState({ comment: "" });
+  const [review, setReview] = useState({ content: "" });
   const [isCommentChange, setIsCommentChange] = useState(false);
   const [editComment, setEditComment] = useState({});
   // const count = useRef(0);
@@ -53,7 +53,7 @@ const Detail = () => {
         navigate(`/lists/${param.id}`);
       }
     });
-    setReview({ comment: "" });
+    setReview({ content: "" });
   };
 
   const onDeletePost = (id) => {
@@ -161,7 +161,7 @@ const Detail = () => {
               const { value } = e.target;
               setReview({
                 ...review,
-                comment: value,
+                content: value,
               });
             }}
           ></StInput>
@@ -192,7 +192,7 @@ const Detail = () => {
                       const { value } = e.target;
                       setEditComment({
                         ...editComment,
-                        comment: value,
+                        content: value,
                       });
                       console.log("editComment-------->", editComment);
                     }}
