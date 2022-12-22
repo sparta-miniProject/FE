@@ -2,13 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import "./main.css";
-import Lottie from "lottie-react";
-import { food } from "../assets";
+
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { __topPost } from "../redux/modules/postSlice";
 // import AllList from "./AllList";
-import axios from "axios";
 
 // import List from "../components/list/List";
 // import Lottie from "lottie-react";
@@ -120,7 +118,7 @@ export default function Main() {
       3000
     );
     return () => clearInterval(setTime);
-  });
+  }, [currentSlide]);
 
   useEffect(() => {
     const setTime2 = setInterval(
@@ -136,7 +134,7 @@ export default function Main() {
       3000
     );
     return () => clearInterval(setTime2);
-  });
+  }, [currentSlide2]);
 
   useEffect(() => {
     const setTime3 = setInterval(
@@ -152,22 +150,30 @@ export default function Main() {
       3000
     );
     return () => clearInterval(setTime3);
-  });
+  }, [currentSlide3]);
 
   useEffect(() => {
-    slideRef.current.style.transition = "all 0.5s ease-in-out";
-    slideRef.current.style.transform = `translateX(-${currentSlide}00%)`; // 백틱을 사용하여 슬라이드로 이동하는 에니메이션을 만듭니다.
+    if (slideRef.current !== null) {
+      console.log(slideRef);
+      slideRef.current.style.transition = "all 0.5s ease-in-out";
+      slideRef.current.style.transform = `translateX(-${currentSlide}00%)`;
+    }
+    // 백틱을 사용하여 슬라이드로 이동하는 에니메이션을 만듭니다.
     console.log(currentSlide);
   }, [currentSlide]);
 
   useEffect(() => {
-    slideRef2.current.style.transition = "all 0.5s ease-in-out";
-    slideRef2.current.style.transform = `translateX(-${currentSlide2}00%)`; // 백틱을 사용하여 슬라이드로 이동하는 에니메이션을 만듭니다.
+    if (slideRef2.current !== null) {
+      slideRef2.current.style.transition = "all 0.5s ease-in-out";
+      slideRef2.current.style.transform = `translateX(-${currentSlide2}00%)`;
+    } // 백틱을 사용하여 슬라이드로 이동하는 에니메이션을 만듭니다.
   }, [currentSlide2]);
 
   useEffect(() => {
-    slideRef3.current.style.transition = "all 0.5s ease-in-out";
-    slideRef3.current.style.transform = `translateX(-${currentSlide3}00%)`; // 백틱을 사용하여 슬라이드로 이동하는 에니메이션을 만듭니다.
+    if (slideRef3.current !== null) {
+      slideRef3.current.style.transition = "all 0.5s ease-in-out";
+      slideRef3.current.style.transform = `translateX(-${currentSlide3}00%)`;
+    } // 백틱을 사용하여 슬라이드로 이동하는 에니메이션을 만듭니다.
   }, [currentSlide3]);
 
   useEffect(() => {}, []);
@@ -187,10 +193,10 @@ export default function Main() {
           </Text>
 
           <SliderContainer id="testbutton" ref={slideRef}>
-            {posts.drinkList.length > 0 &&
-              posts.drinkList.map((data) => {
+            {posts.drinkList &&
+              posts?.drinkList.map((data) => {
                 if (data.category === "drink") {
-                  console.log(data);
+                  console.log("data", data);
                   return (
                     <div key={data.id}>
                       <StImg src={data.imageUrl} />
@@ -222,8 +228,8 @@ export default function Main() {
             </AddWatch>
           </Text>
           <SliderContainer ref={slideRef2}>
-            {posts.recipeList.length > 0 &&
-              posts.recipeList.map((data) => {
+            {posts.recipeList &&
+              posts?.recipeList.map((data) => {
                 if (data.category === "recipe") {
                   console.log(data);
                   return (
@@ -257,8 +263,8 @@ export default function Main() {
             </AddWatch>
           </Text>
           <SliderContainer ref={slideRef3}>
-            {posts.foodList.length > 0 &&
-              posts.foodList.map((data) => {
+            {posts.foodList &&
+              posts?.foodList.map((data) => {
                 if (data.category === "food") {
                   console.log(data);
                   return (
