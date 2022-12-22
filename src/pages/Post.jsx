@@ -77,18 +77,20 @@ const Post = () => {
   // }, []);
 
   const onSubmitHandler = () => {
+    console.log(title, content, category);
     const formdata = new FormData();
     formdata.append("file", imagefile);
-    formdata.append("title", title);
-    formdata.append("content", content);
-    formdata.append("category", category);
+    formdata.append("title", title.title);
+    formdata.append("content", content.content);
+    formdata.append("category", category.category);
     console.log(formdata);
     console.log(typeof formdata);
+
     dispatch(__addPost(formdata));
 
-    // for (const pair of formdata) {
-    //   console.log(pair[0] + ", " + pair[1]);
-    // }
+    for (const pair of formdata) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
   };
 
   return (
@@ -136,7 +138,7 @@ const Post = () => {
           required
           onChange={(ev) => {
             const { value } = ev.target;
-            console.log("title", title);
+            console.log(title);
             setTitle({
               ...title,
 
