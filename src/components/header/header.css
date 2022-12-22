@@ -1,0 +1,13 @@
+.beer_image1 {
+  width: 200px;
+}
+.starlight {
+  width: 1000px;
+  height: 1000px;
+  z-index: -2;
+}
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
