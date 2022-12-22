@@ -119,7 +119,7 @@ const Post = () => {
         onSubmit={(e) => {
           e.preventDefault();
           onEditHandler(Number(param.id), editpost);
-          // navigate("/lists");
+          navigate("/lists");
           console.log(param.id);
         }}
       >
@@ -232,9 +232,9 @@ const Post = () => {
         <div>
           <Button
             add
-            onClick={() => {
-              navigate("/lists");
-            }}
+            // onClick={() => {
+            //   navigate("/lists");
+            // }}
           >
             수정하기
           </Button>
