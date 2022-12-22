@@ -19,7 +19,6 @@ const AllList = () => {
 
   useEffect(() => {
     dispatch(__getPost());
-    console.log("hi");
   }, [dispatch]);
 
   const contents = [

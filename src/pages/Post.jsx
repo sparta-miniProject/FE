@@ -78,7 +78,7 @@ const Post = () => {
 
   const onSubmitHandler = () => {
     const formdata = new FormData();
-    formdata.append("imageUrl", imagefile);
+    formdata.append("file", imagefile);
     formdata.append("title", title);
     formdata.append("content", content);
     formdata.append("category", category);

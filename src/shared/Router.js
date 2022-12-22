@@ -14,8 +14,8 @@ import Sidebar from "../components/Sidebar/Sidebar";
 const Router = () => {
   return (
     <BrowserRouter>
+      <Sidebar />
       <Layout>
-        <Sidebar />
         <Routes>
           <Route path="/" element={<Home />} />
 

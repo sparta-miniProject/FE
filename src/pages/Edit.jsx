@@ -41,12 +41,10 @@ const Post = () => {
   const [category, setCategory] = useState("");
   const [editpost, setEditPost] = useState([]);
 
-  const post = useSelector((state) => state.posts.post);
-  console.log("posts???", post);
-
   useEffect(() => {
     dispatch(__getIdPost(+param.id));
   }, [dispatch, param.id]);
+
   // console.log(imageUrl);
   // const [imageUrl, setImageUrl] = useState("디폴트 이미지 주소");
   // const setFile = (e) => {};
@@ -110,7 +108,8 @@ const Post = () => {
       console.log(pair[0] + ", " + pair[1]);
     }
   };
-
+  const post = useSelector((state) => state.posts.post);
+  console.log("posts???", post);
   return (
     <StDiv>
       <StForm

@@ -42,10 +42,12 @@ export const apis = {
     return baseURL.get(`/post/${id}`);
   },
 
-  createPost: (post) =>
+  createPost: (post) => {
+    console.log("payload::", post);
     baseURL.post("/post", post, {
       headers: { "Content-Type": "multipart/form-data" },
-    }),
+    });
+  },
   deletePost: (id) => baseURL.delete(`/post/${id}`),
   editPost: (id, post) =>
     // console.log("string", id, post);
